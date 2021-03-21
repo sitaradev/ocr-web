@@ -1,31 +1,48 @@
-// Full Documentation - https://docs.turbo360.co
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
+const multer = require("multer");
+const fs = require("fs");
+var Tesseract = require("tesseract.js");
 
-/*  This is the home route. It renders the index.mustache page from the views directory.
-  Data is rendered using the Mustache templating engine. For more
-  information, view here: https://mustache.github.io/#demo */
-router.get('/', (req, res) => {
-  res.render('index', { text: 'This is the dynamic data. Open index.js from the routes directory to see.' })
-})
+var Storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, __dirname + "/images");
+  },
+  filename: (req, file, callback) => {
+    callback(null, file.originalname);
+  },
+});
 
-/*  This route render json data */
-router.get('/json', (req, res) => {
-  res.json({
-    confirmation: 'success',
-    app: process.env.TURBO_APP_ID,
-    data: 'this is a sample json route.'
-  })
-})
+var upload = multer({
+  storage: Storage,
+}).single("image");
+//route
 
-/*  This route sends text back as plain text. */
-router.get('/send', (req, res) => {
-  res.send('This is the Send Route')
-})
+router.post("/upload", (req, res) => {
+  console.log(req.file);
+  upload(req, res, (err) => {
+    if (err) {
+      console.log(err);
+      return res.send("Something went wrong");
+    }
 
-/*  This route redirects requests to Turbo360. */
-router.get('/redirect', (req, res) => {
-  res.redirect('https://www.turbo360.co/landing')
-})
-
-module.exports = router
+    var image = fs.readFileSync(
+      __dirname + "/images/" + req.file.originalname,
+      {
+        encoding: null,
+      }
+    );
+    Tesseract.recognize(image)
+      .progress(function (p) {
+        console.log("progress", p);
+      })
+      .then(function (result) {
+        res.send(result.html);
+      });
+  });
+});
+router.get("/showdata", (req, res) => {});
+router.get("/", (req, res) => {
+  res.render("index.ejs");
+});
+module.exports = router;

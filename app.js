@@ -1,34 +1,72 @@
 // Full Documentation - https://docs.turbo360.co
-const vertex = require('vertex360')({ site_id: process.env.TURBO_APP_ID })
-const express = require('express')
+const vertex = require("vertex360")({ site_id: process.env.TURBO_APP_ID });
+const express = require("express");
 
-const app = express() // initialize app
-
-/*  Apps are configured with settings as shown in the conig object below.
-    Options include setting views directory, static assets directory,
-    and database settings. Default config settings can be seen here:
-    https://docs.turbo360.co */
-
+const app = express(); // initialize app
+var result = "";
 const config = {
-  views: 'views', // Set views directory
-  static: 'public', // Set static assets directory
+  views: "views", // Set views directory
+  static: "public", // Set static assets directory
   logging: true,
+};
 
-  /*  To use the Turbo 360 CMS, from the terminal run
-      $ turbo extend cms
-      then uncomment line 21 below: */
+const multer = require("multer");
+const fs = require("fs");
+var Tesseract = require("tesseract.js");
 
-  // db: vertex.nedb()
-}
+var Storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, __dirname + "/images");
+  },
+  filename: (req, file, callback) => {
+    callback(null, file.originalname);
+  },
+});
 
-vertex.configureApp(app, config)
+var upload = multer({
+  storage: Storage,
+}).single("image");
+//route
 
+app.post("/upload", (req, res) => {
+  console.log(req.file);
+  upload(req, res, (err) => {
+    if (err) {
+      console.log(err);
+      return res.send("Something went wrong");
+    }
+
+    var image = fs.readFileSync(
+      __dirname + "/images/" + req.file.originalname,
+      {
+        encoding: null,
+      }
+    );
+    Tesseract.recognize(image, "eng", { logger: (m) => console.log(m) }).then(
+      ({ data: { text } }) => {
+        console.log(text);
+        result = text;
+        res.redirect("/showdata");
+      }
+    );
+  });
+});
+app.get("/showdata", (req, res) => {
+  res.render("result.ejs", { text: result });
+});
+app.get("/", (req, res) => {
+  res.render("index.ejs");
+});
+
+vertex.configureApp(app, config);
+app.set("view engine", "ejs");
+app.use(express.json());
 // import routes
-const index = require('./routes/index')
-const api = require('./routes/api') // sample API Routes
+const index = require("./routes/index");
+const api = require("./routes/api"); // sample API Routes
 
 // set routes
-app.use('/', index)
-app.use('/api', api) // sample API Routes
+//app.use("/", index);
+app.use("/api", api); // sample API Routes
 
-module.exports = app
+module.exports = app;
