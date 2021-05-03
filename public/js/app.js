@@ -1,8 +1,9 @@
 //selecting all required elements
 const dropArea = document.querySelector(".drag-area"),
   dragText = dropArea.querySelector("header"),
-  button = dropArea.querySelector("button"),
+  button = dropArea.querySelector(".browse"),
   input = dropArea.querySelector("input");
+
 let file; //this is a global variable and we'll use it inside multiple functions
 
 button.onclick = () => {
@@ -46,8 +47,11 @@ function showFile() {
     fileReader.onload = () => {
       let fileURL = fileReader.result; //passing user file source in fileURL variable
       // UNCOMMENT THIS BELOW LINE. I GOT AN ERROR WHILE UPLOADING THIS POST SO I COMMENTED IT
-      let imgTag = `<img src="${fileURL}" alt="image">`; //creating an img tag and passing user selected file source inside src attribute
-      dropArea.innerHTML = imgTag; //adding that created img tag inside dropArea container
+      let imgTag = `<img src="${fileURL}" class="image" alt="image">`; //creating an img tag and passing user selected file source inside src attribute
+      const img = document.createElement("img");
+      img.src = fileURL;
+      img.classList.add("image");
+      dropArea.appendChild(img); //adding that created img tag inside dropArea container
     };
     fileReader.readAsDataURL(file);
   } else {
