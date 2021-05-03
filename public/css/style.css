@@ -10,12 +10,13 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: #5256ad;
+  background: url("/images/bgsvg.svg");
 }
 .drag-area {
   border: 2px dashed #fff;
   height: 500px;
   width: 700px;
+  background: #8570ed;
   border-radius: 5px;
   display: flex;
   align-items: center;
@@ -60,4 +61,7 @@ body {
 .image {
   max-height: 200px;
   max-width: 200px;
+}
+.spinner {
+  position: absolute;
 }

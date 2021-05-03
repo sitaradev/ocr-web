@@ -13,10 +13,12 @@
   </head>
   <body>
     <div class="drag-area">
-      <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
+      <div class="top">
+        <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
 
-      <span>OR</span>
-      <span class="browse">Browse File</span>
+        <span>OR</span>
+        <span class="browse">Browse File</span>
+      </div>
       <form
         id="frmUploader"
         class="form"
@@ -25,10 +27,16 @@
         method="post"
       >
         <input type="file" class="file" name="image" hidden />
-        <input type="submit" name="submit" id="btnSubmit" value="Upload" />
+        <input
+          type="submit"
+          name="submit"
+          onclick="loader()"
+          id="btnSubmit"
+          value="Upload"
+        />
       </form>
     </div>
-
+    <script></script>
     <script src="js/app.js"></script>
   </body>
 </html>
