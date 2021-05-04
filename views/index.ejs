@@ -10,9 +10,21 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
     />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+      integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"
+      integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
+      crossorigin="anonymous"
+    />
     <title>Image to Text</title>
   </head>
   <body>
+    <div id="snackbar">Please Upload a File</div>
     <p class="title">Image to Text</p>
     <div class="drag-area">
       <div class="top">
@@ -30,13 +42,7 @@
         method="post"
       >
         <input type="file" class="file" name="image" hidden />
-        <input
-          type="submit"
-          name="submit"
-          onclick="loader()"
-          id="btnSubmit"
-          value="Upload"
-        />
+        <button id="btnSubmit" onclick="loader()">Upload</button>
       </form>
     </div>
 

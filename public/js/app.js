@@ -1,4 +1,5 @@
 //selecting all required elements
+var flag = false;
 const dropArea = document.querySelector(".drag-area"),
   dragText = dropArea.querySelector("header"),
   button = dropArea.querySelector(".browse"),
@@ -13,6 +14,9 @@ button.onclick = () => {
 input.addEventListener("change", function () {
   //getting user select file and [0] this means if user select multiple files then we'll select only the first one
   file = this.files[0];
+  if (file) {
+    flag = true;
+  }
   dropArea.classList.add("active");
   showFile(); //calling function
 });
@@ -61,8 +65,26 @@ function showFile() {
   }
 }
 function loader() {
-  const spinner = document.createElement("img");
-  spinner.src = "images/Spinner.svg";
-  spinner.classList.add("spinner");
-  dropArea.appendChild(spinner);
+  event.preventDefault();
+  if (flag) {
+    //console.log("CLicked");
+    document.querySelector("form").submit();
+    const spinner = document.createElement("img");
+    spinner.src = "images/Spinner.svg";
+    spinner.classList.add("spinner");
+    dropArea.appendChild(spinner);
+  } else {
+    console.log("Please upload a file");
+
+    // Get the snackbar DIV
+    var x = document.getElementById("snackbar");
+
+    // Add the "show" class to DIV
+    x.className = "show";
+
+    // After 3 seconds, remove the show class from DIV
+    setTimeout(function () {
+      x.className = x.className.replace("show", "");
+    }, 3000);
+  }
 }
