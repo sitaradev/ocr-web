@@ -8,26 +8,36 @@
 body {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   min-height: 100vh;
+  flex-direction: column;
   background: url("/images/bgsvg.svg");
 }
+.title {
+  color: #fff;
+  font-size: 2.5rem;
+  margin: 1rem 0;
+  font-weight: 600;
+}
 .drag-area {
-  border: 2px dashed #fff;
-  height: 500px;
-  width: 700px;
+  border: none;
+  height: 50vh;
+  min-height: 400px;
+  min-width: 500px;
+  width: 60vw;
   background: #8570ed;
   border-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  -webkit-box-shadow: 2px 5px 12px 1px rgba(0, 0, 0, 0.59);
+  box-shadow: 2px 5px 12px 1px rgba(0, 0, 0, 0.59);
 }
-.drag-area.active {
-  border: 2px solid #fff;
-}
+
 .drag-area .icon {
-  font-size: 100px;
+  text-align: center;
+  font-size: 120px;
   color: #fff;
 }
 .drag-area header {
@@ -35,11 +45,12 @@ body {
   font-weight: 500;
   color: #fff;
 }
-.drag-area span {
+.mid {
   font-size: 25px;
-  font-weight: 500;
+  font-weight: 600;
   color: #fff;
-  margin: 10px 0 15px 0;
+  margin: 0.5rem 0;
+  text-align: center;
 }
 .drag-area button {
   padding: 10px 25px;
@@ -60,8 +71,12 @@ body {
 }
 .image {
   max-height: 200px;
-  max-width: 200px;
+  max-width: 400px;
 }
 .spinner {
   position: absolute;
+}
+#btnSubmit {
+  margin: 2rem;
+  cursor: pointer;
 }
