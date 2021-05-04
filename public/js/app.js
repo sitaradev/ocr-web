@@ -64,5 +64,5 @@ function loader() {
   const spinner = document.createElement("img");
   spinner.src = "images/Spinner.svg";
   spinner.classList.add("spinner");
-  document.body.appendChild(spinner);
+  dropArea.appendChild(spinner);
 }
