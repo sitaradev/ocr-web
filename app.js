@@ -1,7 +1,7 @@
 // Full Documentation - https://docs.turbo360.co
 const vertex = require("vertex360")({ site_id: process.env.TURBO_APP_ID });
 const express = require("express");
-
+import { Document, Packer, Paragraph, TextRun } from "docx";
 const app = express(); // initialize app
 var result = "";
 const config = {
@@ -58,15 +58,19 @@ app.get("/", (req, res) => {
   res.render("index.ejs");
 });
 
+const paragraph = new Paragraph({
+  text: "Hello World",
+});
+
 vertex.configureApp(app, config);
 app.set("view engine", "ejs");
 app.use(express.json());
 // import routes
 const index = require("./routes/index");
-const api = require("./routes/api"); // sample API Routes
+//const api = require("./routes/api"); // sample API Routes
 
 // set routes
 //app.use("/", index);
-app.use("/api", api); // sample API Routes
+//app.use("/api", api); // sample API Routes
 
 module.exports = app;
