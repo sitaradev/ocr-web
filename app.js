@@ -1,11 +1,11 @@
 const vertex = require("vertex360")({ site_id: process.env.TURBO_APP_ID });
 const express = require("express");
-
+const fsPromises = require("fs").promises;
 const app = express(); // initialize app
 var result;
-
+const directory = "images/";
 const { v4: uuidv4 } = require("uuid");
-
+const fsExtra = require("fs-extra");
 const config = {
   views: "views", // Set views directory
   static: "public", // Set static assets directory
@@ -22,13 +22,14 @@ function getFilePath(path) {
   var filePath = newId + "-" + path;
   return filePath;
 }
-
+var filePath;
 var Storage = multer.diskStorage({
   destination: (req, file, callback) => {
     callback(null, __dirname + "/images");
   },
   filename: (req, file, callback) => {
-    callback(null, getFilePath(file.originalname));
+    filePath = getFilePath(file.originalname);
+    callback(null, filePath);
   },
 });
 
@@ -45,12 +46,9 @@ app.post("/upload", (req, res) => {
       return res.send("Something went wrong");
     }
 
-    var image = fs.readFileSync(
-      __dirname + "/images/" + req.file.originalname,
-      {
-        encoding: null,
-      }
-    );
+    var image = fs.readFileSync(__dirname + "/images/" + filePath, {
+      encoding: null,
+    });
     Tesseract.recognize(image, "eng", { logger: (m) => console.log(m) }).then(
       ({ data: { text } }) => {
         console.log(text);
@@ -64,6 +62,8 @@ app.get("/showdata", async (req, res) => {
   if (!result) {
     res.redirect("/");
   }
+
+  await fsExtra.emptyDirSync(directory);
   res.render("result.ejs", { text: result });
 });
 app.get("/", (req, res) => {
