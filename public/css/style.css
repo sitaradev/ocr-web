@@ -67,7 +67,7 @@ body {
   max-width: 100px;
   max-height: 100px;
 }
-#btnSubmit {
+.btn {
   margin: 2rem;
   border: none;
   display: inline-block;
