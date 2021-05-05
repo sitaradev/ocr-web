@@ -1,7 +1,7 @@
 // Full Documentation - https://docs.turbo360.co
 const vertex = require("vertex360")({ site_id: process.env.TURBO_APP_ID });
 const express = require("express");
-import { Document, Packer, Paragraph, TextRun } from "docx";
+const docx = require("docx");
 const app = express(); // initialize app
 var result = "";
 const config = {
@@ -52,14 +52,36 @@ app.post("/upload", (req, res) => {
   });
 });
 app.get("/showdata", (req, res) => {
+  const doc = new docx.Document({
+    sections: [
+      {
+        properties: {},
+        children: [
+          new docx.Paragraph({
+            children: [
+              new docx.TextRun({
+                text: result,
+                bold: true,
+              }),
+              new docx.TextRun({
+                text: "\tMade by Aditya Sharma",
+                bold: true,
+              }),
+            ],
+          }),
+        ],
+      },
+    ],
+  });
+  //console.log("Flagged");
+  // Used to export the file into a .docx file
+  docx.Packer.toBuffer(doc).then((buffer) => {
+    fs.writeFileSync("results/result.docx", buffer);
+  });
   res.render("result.ejs", { text: result });
 });
 app.get("/", (req, res) => {
   res.render("index.ejs");
-});
-
-const paragraph = new Paragraph({
-  text: "Hello World",
 });
 
 vertex.configureApp(app, config);
