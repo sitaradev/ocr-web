@@ -11,12 +11,12 @@
     "postinstall": "turbo postinstall"
   },
   "dependencies": {
-    "docx": "^6.0.3",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "multer": "^1.4.2",
     "tesseract.js": "^2.1.4",
     "turbo360": "^1.8.69",
+    "uuid": "^8.3.2",
     "vertex360": "^0.30.39"
   },
   "devDependencies": {

@@ -1,9 +1,11 @@
-// Full Documentation - https://docs.turbo360.co
 const vertex = require("vertex360")({ site_id: process.env.TURBO_APP_ID });
 const express = require("express");
-const docx = require("docx");
+
 const app = express(); // initialize app
-var result = "";
+var result;
+
+const { v4: uuidv4 } = require("uuid");
+
 const config = {
   views: "views", // Set views directory
   static: "public", // Set static assets directory
@@ -14,12 +16,19 @@ const multer = require("multer");
 const fs = require("fs");
 var Tesseract = require("tesseract.js");
 
+function getFilePath(path) {
+  var newId = uuidv4();
+  newId = newId.substring(0, 13);
+  var filePath = newId + "-" + path;
+  return filePath;
+}
+
 var Storage = multer.diskStorage({
   destination: (req, file, callback) => {
     callback(null, __dirname + "/images");
   },
   filename: (req, file, callback) => {
-    callback(null, file.originalname);
+    callback(null, getFilePath(file.originalname));
   },
 });
 
@@ -51,36 +60,14 @@ app.post("/upload", (req, res) => {
     );
   });
 });
-app.get("/showdata", (req, res) => {
-  const doc = new docx.Document({
-    sections: [
-      {
-        properties: {},
-        children: [
-          new docx.Paragraph({
-            children: [
-              new docx.TextRun({
-                text: result,
-                bold: true,
-              }),
-              new docx.TextRun({
-                text: "\tMade by Aditya Sharma",
-                bold: true,
-              }),
-            ],
-          }),
-        ],
-      },
-    ],
-  });
-  //console.log("Flagged");
-  // Used to export the file into a .docx file
-  docx.Packer.toBuffer(doc).then((buffer) => {
-    fs.writeFileSync("results/result.docx", buffer);
-  });
+app.get("/showdata", async (req, res) => {
+  if (!result) {
+    res.redirect("/");
+  }
   res.render("result.ejs", { text: result });
 });
 app.get("/", (req, res) => {
+  console.log();
   res.render("index.ejs");
 });
 
@@ -89,6 +76,7 @@ app.set("view engine", "ejs");
 app.use(express.json());
 // import routes
 const index = require("./routes/index");
+
 //const api = require("./routes/api"); // sample API Routes
 
 // set routes

@@ -4,6 +4,16 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/downloadjs/1.4.8/download.min.js"
+      integrity="sha512-WiGQZv8WpmQVRUFXZywo7pHIO0G/o3RyiAJZj8YXNN4AV7ReR1RYWVmZJ6y3H06blPcjJmG/sBpOVZjTSFFlzQ=="
+      crossorigin="anonymous"
+    ></script>
     <link rel="stylesheet" href="css/style.css" />
     <title>Result</title>
   </head>
@@ -17,9 +27,15 @@
     <div class="text">
       <h3><%=text%></h3>
     </div>
-    <button class="btn">Download .docx File</button>
+
+    <button class="btn" id="dnBtn">Download .txt file</button>
   </body>
   <script>
+    document.querySelector("#dnBtn").addEventListener("click", () => {
+      var text = `<%= text %>`;
+      download(text, "result.txt", "text/plain");
+    });
+
     var buttons = document.getElementsByTagName("button");
 
     Array.prototype.forEach.call(buttons, function (b) {
