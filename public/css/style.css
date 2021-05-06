@@ -24,6 +24,7 @@ body {
   height: 50vh;
   min-height: 400px;
   min-width: 500px;
+  padding: 1rem;
   width: 60vw;
   background: #8570ed;
   border-radius: 5px;
@@ -59,8 +60,10 @@ body {
   border-radius: 5px;
 }
 .image {
-  max-height: 200px;
-  max-width: 400px;
+  min-height: 200px;
+  min-width: 400px;
+  max-height: 30vh;
+  max-width: 40vw;
 }
 .spinner {
   position: absolute;
@@ -165,6 +168,9 @@ body {
     padding: 0.5rem 0.7rem;
     font-size: 0.9rem;
   }
+  .image {
+    min-width: 250px;
+  }
 }
 @media only screen and (max-width: 400px) {
   .drag-area {
@@ -173,6 +179,9 @@ body {
   #snackbar {
     padding: 0.4rem 0.6rem;
     font-size: 0.8rem;
+  }
+  .image {
+    min-width: 180px;
   }
 }
 @media only screen and (max-height: 550px) {
@@ -190,5 +199,8 @@ body {
   }
   .icon {
     font-size: 20px;
+  }
+  .image {
+    min-height: 150px;
   }
 }
