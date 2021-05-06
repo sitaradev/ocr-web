@@ -20,18 +20,18 @@ input.addEventListener("change", function () {
   dropArea.classList.add("active");
   showFile(); //calling function
 });
-
+/*
 //If user Drag File Over DropArea
 dropArea.addEventListener("dragover", (event) => {
   event.preventDefault(); //preventing from default behaviour
   dropArea.classList.add("active");
-  dragText.textContent = "Release to Upload File";
+  //dragText.textContent = "Release to Upload File";
 });
 
 //If user leave dragged File from DropArea
 dropArea.addEventListener("dragleave", () => {
   dropArea.classList.remove("active");
-  dragText.textContent = "Drag & Drop to Upload File";
+  //dragText.textContent = "Drag & Drop to Upload File";
 });
 
 //If user drop File on DropArea
@@ -39,9 +39,14 @@ dropArea.addEventListener("drop", (event) => {
   event.preventDefault(); //preventing from default behaviour
   //getting user select file and [0] this means if user select multiple files then we'll select only the first one
   file = event.dataTransfer.files[0];
+  console.log(file.webkitRelativePath);
+  if (file) {
+    flag = true;
+    document.querySelector(".file").nodeValue = file;
+  }
   showFile(); //calling function
 });
-
+*/
 function showFile() {
   let fileType = file.type; //getting selected file type
   let validExtensions = ["image/jpeg", "image/jpg", "image/png"]; //adding some valid image extensions in array
