@@ -1,27 +1,36 @@
 {
   "name": "ocr",
   "version": "1.0.0",
-  "server": false,
-  "private": true,
+  "description": "An Image to Text (OCR) Node application deployed using Tesseract.js and deployed on Turbo environment",
+  "main": "app.js",
   "scripts": {
-    "start": "node ./bin/www",
-    "serve": "turbo devserver",
-    "test": "",
-    "build": "",
-    "postinstall": "turbo postinstall"
+    "test": "npm start",
+    "start": "nodemon app"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aditya-011/ocr-web.git"
+  },
+  "keywords": [
+    "ocr",
+    "image",
+    "to",
+    "text"
+  ],
+  "author": "Aditya Sharma",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Aditya-011/ocr-web/issues"
+  },
+  "homepage": "https://github.com/Aditya-011/ocr-web#readme",
   "dependencies": {
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "multer": "^1.4.2",
     "tesseract.js": "^2.1.4",
-    "turbo360": "^1.8.69",
-    "uuid": "^8.3.2",
-    "vertex360": "^0.30.39"
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.2",
-    "rimraf": "^2.6.2"
-  },
-  "format": "vertex"
+    "nodemon": "^2.0.7"
+  }
 }
