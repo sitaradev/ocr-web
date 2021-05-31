@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express(); // initialize app
+const fsPromises = require("fs").promises;
 var result;
 const directory = "images/";
 const { v4: uuidv4 } = require("uuid");
