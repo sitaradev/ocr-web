@@ -34,7 +34,7 @@ var upload = multer({
 //route
 
 app.post("/upload", (req, res) => {
-  console.log(req.file);
+  //console.log(req.file);
   upload(req, res, (err) => {
     if (err) {
       console.log(err);
@@ -48,8 +48,8 @@ app.post("/upload", (req, res) => {
       ({ data: { text } }) => {
         console.log(text);
         result = text;
-        //res.redirect("/showdata");
-        res.render("result.ejs", { text: result });
+        res.redirect("/showdata");
+        //res.render("result.ejs", { text: result });
       }
     );
   });
