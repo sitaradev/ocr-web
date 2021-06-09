@@ -15,7 +15,8 @@
     "ocr",
     "image",
     "to",
-    "text"
+    "text",
+    "ocr"
   ],
   "author": "Aditya Sharma",
   "license": "ISC",
