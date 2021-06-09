@@ -64,6 +64,6 @@ app.get("/", (req, res) => {
   console.log();
   res.render("index.ejs");
 });
-app.listen(3000, () => {
-  console.log("Server started at 3000");
+app.listen(process.env.PORT, () => {
+  console.log(`Server started ${process.env.PORT}`);
 });
