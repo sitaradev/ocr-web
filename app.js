@@ -9,6 +9,7 @@ const multer = require("multer");
 const fs = require("fs");
 var Tesseract = require("tesseract.js");
 app.use(express.static("public"));
+
 function getFilePath(path) {
   var newId = uuidv4();
   newId = newId.substring(0, 13);
@@ -63,6 +64,6 @@ app.get("/", (req, res) => {
   console.log();
   res.render("index.ejs");
 });
-app.listen(process.env.PORT, () => {
+app.listen(3000, () => {
   console.log("Server started at 3000");
 });
