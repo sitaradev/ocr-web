@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express(); // initialize app
 const fsPromises = require("fs").promises;
+require("dotenv").config();
 var result;
 const directory = "images/";
 const { v4: uuidv4 } = require("uuid");
@@ -47,7 +48,8 @@ app.post("/upload", (req, res) => {
       ({ data: { text } }) => {
         console.log(text);
         result = text;
-        res.redirect("/showdata");
+        //res.redirect("/showdata");
+        res.render("result.ejs", { text: result });
       }
     );
   });
