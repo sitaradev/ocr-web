@@ -35,7 +35,7 @@ var upload = multer({
 
 app.post("/upload", (req, res) => {
   //console.log(req.file);
-  upload(req, res, (err) => {
+  upload(req, res, async (err) => {
     if (err) {
       console.log(err);
       return res.send("Something went wrong");
@@ -44,14 +44,14 @@ app.post("/upload", (req, res) => {
     var image = fs.readFileSync(__dirname + "/images/" + filePath, {
       encoding: null,
     });
-    Tesseract.recognize(image, "eng", { logger: (m) => console.log(m) }).then(
-      ({ data: { text } }) => {
-        console.log(text);
-        result = text;
-        res.redirect("/showdata");
-        //res.render("result.ejs", { text: result });
-      }
-    );
+    await Tesseract.recognize(image, "eng", {
+      logger: (m) => console.log(m),
+    }).then(({ data: { text } }) => {
+      console.log(text);
+      result = text;
+      res.redirect("/showdata");
+      //res.render("result.ejs", { text: result });
+    });
   });
 });
 app.get("/showdata", async (req, res) => {
