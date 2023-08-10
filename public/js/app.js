@@ -69,30 +69,50 @@ function showFile() {
     dragText.textContent = "Drag & Drop to Upload File";
   }
 }
+
 function loader() {
   event.preventDefault();
-  if (flag) {
-    //console.log("CLicked");
+
+  const selectedRadio = document.querySelector(
+    'input[name="document"]:checked'
+  );
+  const dropArea = document.querySelector(".drag-area");
+  const imageInput = document.querySelector('input[name="image"]');
+  const flag = imageInput.files.length > 0;
+
+  // alert(selectedRadio.innerHTML);
+  if (flag && selectedRadio) {
     document.querySelector("form").submit();
+
     const spinner = document.createElement("img");
     spinner.src = "images/Spinner.svg";
     spinner.classList.add("spinner");
     dropArea.appendChild(spinner);
-  } else {
-    console.log("Please upload a file");
+  } else if (!flag) {
+    // Handle image not uploaded scenario
+    console.log("Please upload an image");
 
-    // Get the snackbar DIV
-    var x = document.getElementById("snackbar");
+    const snackbar = document.getElementById("snackbar");
+    snackbar.textContent = "Please upload an image before proceeding.";
+    snackbar.className = "show";
 
-    // Add the "show" class to DIV
-    x.className = "show";
-
-    // After 3 seconds, remove the show class from DIV
     setTimeout(function () {
-      x.className = x.className.replace("show", "");
+      snackbar.className = snackbar.className.replace("show", "");
+    }, 3000);
+  } else {
+    // Handle radio button not selected scenario
+    console.log("Please select a document type");
+
+    const snackbar = document.getElementById("snackbar");
+    snackbar.textContent = "Please select a document type before uploading.";
+    snackbar.className = "show";
+
+    setTimeout(function () {
+      snackbar.className = snackbar.className.replace("show", "");
     }, 3000);
   }
 }
+
 var buttons = document.getElementsByTagName("button");
 
 Array.prototype.forEach.call(buttons, function (b) {
