@@ -9,6 +9,10 @@ const fsExtra = require("fs-extra");
 const multer = require("multer");
 const fs = require("fs");
 const mindee = require("mindee");
+const bodyParser = require("body-parser");
+
+// Use bodyParser middleware to parse form data
+app.use(bodyParser.urlencoded({ extended: true }));
 
 var Tesseract = require("tesseract.js");
 app.use(express.static("public"));
@@ -40,45 +44,109 @@ var upload = multer({
 
 let extractedData;
 
-app.post("/upload", (req, res) => {
-  //console.log(req.file);
-  upload(req, res, async (err) => {
-    if (err) {
-      console.log(err);
-      return res.send("Something went wrong");
-    }
+app.post("/upload", async (req, res) => {
+  try {
+    upload(req, res, async (err) => {
+      if (err) {
+        console.error("Error during upload:", err);
+        return res.send("Something went wrong");
+      }
 
-    var image = fs.readFileSync(__dirname + "/images/" + filePath, {
-      encoding: null,
+      console.log("else inside upload");
+      var image = fs.readFileSync(__dirname + "/images/" + filePath, {
+        encoding: null,
+      });
+
+      // Assuming this part was missing in the previous snippet
+      try {
+        const {
+          data: { text },
+        } = await Tesseract.recognize(image, "eng");
+        result = text;
+      } catch (tesseractError) {
+        console.error("Tesseract error:", tesseractError);
+      }
+
+      // Retrieve the selected API value from the form
+      const selectedApi = req.body.selectedApi;
+
+      console.log("selectedApi is", selectedApi);
+      var doc;
+      try {
+        switch (selectedApi) {
+          case "Invoice":
+            // Call the Mindee API for Invoice
+            doc = mindeeClient.docFromPath(__dirname + "/images/" + filePath);
+            var resp = await doc.parse(mindee.InvoiceV4);
+            console.log("resp of invoice", resp);
+            break;
+
+          case "Receipt":
+            // Call the Mindee API for Receipt
+            doc = mindeeClient.docFromPath(__dirname + "/images/" + filePath);
+            var resp = await doc.parse(mindee.ReceiptV3);
+            console.log("resp of Receipt", resp);
+            break;
+
+          case "Passport":
+            // Call the Mindee API for Passport
+            console.log("Passport hit");
+            doc = mindeeClient.docFromPath(__dirname + "/images/" + filePath);
+            var resp = await doc.parse(mindee.PassportV1);
+            break;
+
+          case "US Bank Check":
+            // Call the Mindee API for US Bank Check (replace mindee with appropriate module)
+            doc = mindeeClient.docFromPath(__dirname + "/images/" + filePath);
+            var resp = await doc.parse(mindeeModule); // replace mindeeModule
+            break;
+
+          case "License Plates":
+            // Call the Mindee API for License Plates (replace mindee with appropriate module)
+            doc = mindeeClient.docFromPath(__dirname + "/images/" + filePath);
+            var resp = await doc.parse(mindeeModule); // replace mindeeModule
+            break;
+
+          default:
+            console.log("Unknown selected API:", selectedApi);
+            break;
+        }
+
+        // Extracted data from Mindee response (modify this based on the Mindee API response structure)
+        extractedData = resp.document.toString();
+
+        // Process the extracted data to remove colon-separated lines at the beginning of each section
+        extractedData = extractedData.replace(/:\s*[\s\S]*?(?=(\n|$))/g, "");
+
+        console.log("extractedData from api", extractedData);
+        res.redirect("/showdata");
+      } catch (mindeeError) {
+        console.error("Mindee API error:", mindeeError);
+        res.send("Mindee API error");
+      }
     });
-    await Tesseract.recognize(image, "eng", {
-      logger: (m) => console.log(m),
-    }).then(async ({ data: { text } }) => {
-      result = text;
-
-      // Now, call the Mindee API to extract invoice data
-      const doc = mindeeClient.docFromPath(__dirname + "/images/" + filePath);
-      const resp = await doc.parse(mindee.InvoiceV4);
-
-      // Extracted data from Mindee response (modify this based on the Mindee API response structure)
-      extractedData = resp.document.toString();
-
-      // Process the extracted data to remove colon-separated lines at the beginning of each section
-      extractedData = extractedData.replace(/:\s*[\s\S]*?(?=(\n|$))/g, "");
-
-      res.redirect("/showdata");
-      //res.render("result.ejs", { text: result });
-    });
-  });
+  } catch (uploadError) {
+    console.error("Error during upload processing:", uploadError);
+    res.send("Error during upload processing");
+  }
 });
+
 app.get("/showdata", async (req, res) => {
   if (!result) {
     res.redirect("/");
   }
 
   await fsExtra.emptyDirSync(directory);
-  res.render("result.ejs", { text: result, extractedData: extractedData });
+
+  // Process the extracted data to remove headers, patterns, and tables
+  const textOnly = extractedData
+    .replace(/[^a-zA-Z0-9\s\n]/g, "") // Remove non-alphanumeric characters
+    .replace(/\n\s*\n/g, "\n") // Remove empty lines
+    .trim(); // Trim leading and trailing spaces
+
+  res.render("result.ejs", { text: result, extractedData: textOnly });
 });
+
 app.get("/", (req, res) => {
   console.log();
   res.render("index.ejs");

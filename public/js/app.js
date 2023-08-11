@@ -64,7 +64,13 @@ function showFile() {
     };
     fileReader.readAsDataURL(file);
   } else {
-    alert("This is not an Image File!");
+    // alert("This is not an Image File!");
+
+    const snackbar = document.getElementById("snackbar");
+    snackbar.textContent =
+      "This is not an Image File! please choose a valid image only";
+    snackbar.className = "show";
+
     dropArea.classList.remove("active");
     dragText.textContent = "Drag & Drop to Upload File";
   }
@@ -76,12 +82,23 @@ function loader() {
   const selectedRadio = document.querySelector(
     'input[name="document"]:checked'
   );
+
   const dropArea = document.querySelector(".drag-area");
   const imageInput = document.querySelector('input[name="image"]');
   const flag = imageInput.files.length > 0;
 
   // alert(selectedRadio.innerHTML);
   if (flag && selectedRadio) {
+    // Get the value of the selected radio button
+    const selectedApi = selectedRadio.value;
+    // Send the selected API value as a hidden input field in the form
+    const selectedApiInput = document.createElement("input");
+    selectedApiInput.type = "hidden";
+    selectedApiInput.name = "selectedApi";
+    selectedApiInput.value = selectedApi;
+    document.querySelector("form").appendChild(selectedApiInput);
+
+    // return;
     document.querySelector("form").submit();
 
     const spinner = document.createElement("img");
