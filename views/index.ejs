@@ -27,6 +27,8 @@
     <title style="text-align: center">Image to Text</title>
   </head>
   <body>
+    <div id="snackbar">Please Upload a File</div>
+
     <!-- // new test div -->
     <div class="hero">
       <div class="logo-top">
@@ -85,30 +87,54 @@
           >
         </div>
 
-        <form id="frmUploader" class="form">
-          <img src="/images/documents.png" alt="documents-img" />
-          <h2>Drag and drop your files here</h2>
-          <p>Supported Formats: PDF, XLXSS, Doc, Image Size: upto 10MB</p>
-          <button>Select files</button>
-          <!-- <input type="file" class="file" name="image" hidden />
-          <button class="btn" style="font-weight: 600" id="btnSubmit">
-            Upload
-          </button> -->
-        </form>
+        <div class="form-container">
+          <form
+            id="frmUploader"
+            class="form"
+            enctype="multipart/form-data"
+            action="/upload"
+            method="post"
+          >
+            <img src="/images/documents.png" alt="documents-img" />
+            <h2>Drag and drop your files here</h2>
+            <p>Supported Formats: PDF, XLXSS, Doc, Image Size: upto 10MB</p>
+            <input type="file" class="file" name="image" hidden />
+          </form>
+          <button
+            class="browse mid upload-btn"
+            style="display: block; cursor: pointer"
+          >
+            Select files
+          </button>
+        </div>
+
         <div class="paste-url">
           <p>Or paste the file link</p>
-          <input
-            type="text"
-            name=""
-            id="input-url"
-            placeholder="Add the file link"
-          />
+
+          <div class="url-submit">
+            <input
+              type="text"
+              name=""
+              id="input-url"
+              placeholder="Add the file link"
+            />
+            <button
+              class="btn-submit-form"
+              style="font-weight: 600"
+              id="btnSubmit"
+              onclick="loader()"
+            >
+              Upload
+            </button>
+          </div>
         </div>
       </div>
     </div>
 
     <script src="js/app.js"></script>
     <script>
+      var labelText;
+
       // Geneating select docs-divs
       const divData = [
         {
@@ -151,13 +177,12 @@
 
       // Referencing the container where repeated divs will be added...
       const container = document.getElementById("radioContainer");
-
       // Event listener function to handle the selection
       function handleRadioSelection(event) {
         openPopup();
         // getting selected label from ui---
 
-        const labelText =
+        labelText =
           event.currentTarget.querySelector(".radio-label").textContent;
         console.log("Selected label:", labelText);
 

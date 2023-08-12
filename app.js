@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var Tesseract = require("tesseract.js");
 app.use(express.static("public"));
 const mindeeClient = new mindee.Client({
-  apiKey: process.env.KEY,
+  apiKey: "4e104512c1c2712dff7c2b7efb811824",
 });
 
 function getFilePath(path) {
@@ -51,11 +51,13 @@ app.post("/upload", async (req, res) => {
         console.error("Error during upload:", err);
         return res.send("Something went wrong");
       }
-
       console.log("else inside upload");
       var image = fs.readFileSync(__dirname + "/images/" + filePath, {
         encoding: null,
       });
+
+      console.log("red.body", req.body);
+      console.log("image", image);
 
       // Assuming this part was missing in the previous snippet
       try {

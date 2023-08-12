@@ -1,6 +1,7 @@
 //selecting all required elements
+// console.log(" is", labelText);
 var flag = false;
-const dropArea = document.querySelector(".drag-area"),
+const dropArea = document.querySelector(".modal-content"),
   dragText = dropArea.querySelector("header"),
   button = dropArea.querySelector(".browse"),
   input = dropArea.querySelector("input");
@@ -8,7 +9,7 @@ const dropArea = document.querySelector(".drag-area"),
 let file; //this is a global variable and we'll use it inside multiple functions
 
 button.onclick = () => {
-  input.click(); //if user click on the button then the input also clicked
+  input.click();
 };
 
 input.addEventListener("change", function () {
@@ -18,7 +19,8 @@ input.addEventListener("change", function () {
     flag = true;
   }
   dropArea.classList.add("active");
-  showFile(); //calling function
+  // showFile();
+  //calling function // add later i just removed for now
 });
 /*
 //If user Drag File Over DropArea
@@ -48,6 +50,7 @@ dropArea.addEventListener("drop", (event) => {
 });
 */
 function showFile() {
+  console.log("showFile fn called");
   let fileType = file.type; //getting selected file type
   let validExtensions = ["image/jpeg", "image/jpg", "image/png"]; //adding some valid image extensions in array
   if (validExtensions.includes(fileType)) {
@@ -55,9 +58,11 @@ function showFile() {
     let fileReader = new FileReader(); //creating new FileReader object
     fileReader.onload = () => {
       let fileURL = fileReader.result; //passing user file source in fileURL variable
+
       // UNCOMMENT THIS BELOW LINE. I GOT AN ERROR WHILE UPLOADING THIS POST SO I COMMENTED IT
       document.querySelector(".top").innerHTML = ""; //creating an img tag and passing user selected file source inside src attribute
       const img = document.createElement("img");
+      // console.log("fileURL", fileURL);
       img.src = fileURL;
       img.classList.add("image");
       dropArea.appendChild(img); //adding that created img tag inside dropArea container
@@ -78,6 +83,7 @@ function showFile() {
 
 function loader() {
   event.preventDefault();
+  console.log("labelText", labelText);
 
   const selectedRadio = document.querySelector(
     'input[name="document"]:checked'
@@ -88,9 +94,9 @@ function loader() {
   const flag = imageInput.files.length > 0;
 
   // alert(selectedRadio.innerHTML);
-  if (flag && selectedRadio) {
+  if (flag && labelText) {
     // Get the value of the selected radio button
-    const selectedApi = selectedRadio.value;
+    const selectedApi = labelText;
     // Send the selected API value as a hidden input field in the form
     const selectedApiInput = document.createElement("input");
     selectedApiInput.type = "hidden";
@@ -175,7 +181,7 @@ function closePopup() {
 
 // Attach the openPopup function to the button's click event
 const openBtn = document.getElementById("openPopupBtn");
-openBtn.addEventListener("click", openPopup);
+// openBtn.addEventListener("click", openPopup);
 
 // Attach the closePopup function to the close button's click event
 const closeBtn = document.getElementById("closePopupBtn");
