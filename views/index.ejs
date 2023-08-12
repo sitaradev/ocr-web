@@ -27,61 +27,185 @@
     <title style="text-align: center">Image to Text</title>
   </head>
   <body>
-    <div id="snackbar">Please Upload a File</div>
-    <p class="title">Image to Text</p>
-    <div class="drag-area">
-      <div class="top">
-        <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
-        <span class="mid" style="display: block">OR</span>
-        <span class="browse mid" style="display: block; cursor: pointer"
-          >Browse File</span
-        >
+    <!-- // new test div -->
+    <div class="hero">
+      <div class="logo-top">
+        <h2>ELLOCR</h2>
       </div>
-      <form
-        id="frmUploader"
-        class="form"
-        enctype="multipart/form-data"
-        action="/upload"
-        method="post"
-      >
-        <input type="file" class="file" name="image" hidden />
-        <button
-          class="btn"
-          style="font-weight: 600"
-          id="btnSubmit"
-          onclick="loader()"
-        >
-          Upload
-        </button>
-      </form>
-      <P style="color: white; font-size: large"
-        >Please select your image type</P
-      >
-      <div class="main">
-        <label
-          ><input type="radio" name="document" value="Invoice" />Invoice</label
-        >
-        <label
-          ><input type="radio" name="document" value="Receipt" />Receipt</label
-        >
-        <label
-          ><input
-            type="radio"
-            name="document"
-            value="Passport"
-          />Passport</label
-        >
-        <label
-          ><input type="radio" name="document" value="US Bank Check" />US Bank
-          Check</label
-        >
-        <label
-          ><input type="radio" name="document" value="License Plates" />License
-          Plates</label
-        >
+      <div class="hero-main">
+        <div class="hero-left">
+          <h3>
+            <span style="color: rgb(31, 31, 242)">Scan</span>, Simplify,
+            Succeed: <br />
+            Your Paperless Pathway
+          </h3>
+          <p>
+            Document digital scanning by drag and drop is a user-friendly and
+            efficient method of converting physical documents into digital
+            format. With this approach, users can simply drag and drop their
+            paper documents, such as invoice, receipts, passport, or many more,
+            onto a application on their computer or mobile device.
+          </p>
+          <button onclick="scrollToDiv('uploadDiv')">Scan Now</button>
+        </div>
+        <div class="hero-right">
+          <img src="../images/demo-img.png" alt="" />
+        </div>
+      </div>
+    </div>
+
+    <!-- area fro upload  docs -->
+    <div class="upload-main" id="uploadDiv">
+      <div class="upload-popup">
+        <img src="../images/upload-img.png" alt="" />
+      </div>
+
+      <div class="upload-type">
+        <div class="upload-inner">
+          <h2>Choose Your Document Here!</h2>
+          <p>
+            Please choose your document and drag it here to initiate the
+            scanning process.
+          </p>
+        </div>
+        <!-- Example: Generating repeated divs using JavaScript -->
+        <div class="custom-radio-container" id="radioContainer">
+          <!-- JavaScript will add repeated divs here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- The modal popup  for uploading documents-->
+    <div id="popupModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Upload your files</h2>
+          <span class="close" id="closePopupBtn" onclick="closePopup()"
+            >&times;</span
+          >
+        </div>
+
+        <form id="frmUploader" class="form">
+          <img src="/images/documents.png" alt="documents-img" />
+          <h2>Drag and drop your files here</h2>
+          <p>Supported Formats: PDF, XLXSS, Doc, Image Size: upto 10MB</p>
+          <button>Select files</button>
+          <!-- <input type="file" class="file" name="image" hidden />
+          <button class="btn" style="font-weight: 600" id="btnSubmit">
+            Upload
+          </button> -->
+        </form>
+        <div class="paste-url">
+          <p>Or paste the file link</p>
+          <input
+            type="text"
+            name=""
+            id="input-url"
+            placeholder="Add the file link"
+          />
+        </div>
       </div>
     </div>
 
     <script src="js/app.js"></script>
+    <script>
+      // Geneating select docs-divs
+      const divData = [
+        {
+          icon: "/images/icons/invoice.png",
+          label: "Invoice",
+          description:
+            "Fleet management is essential for businesses in various....",
+        },
+        {
+          icon: "/images/icons/reciept.png",
+          label: "Receipt",
+          description:
+            "Fleet management is essential for businesses in various....",
+        },
+        {
+          icon: "/images/icons/passport.png",
+          label: "Passport",
+          description:
+            "Fleet management is essential for businesses in various....",
+        },
+        {
+          icon: "/images/icons/passport.png",
+          label: "US Bank Check",
+          description:
+            "Fleet management is essential for businesses in various....",
+        },
+        {
+          icon: "/images/icons/license-plate.png",
+          label: "License plates",
+          description:
+            "Fleet management is essential for businesses in various....",
+        },
+        {
+          icon: "/images/icons/video-player.png",
+          label: "Video",
+          description:
+            "Fleet management is essential for businesses in various....",
+        },
+      ];
+
+      // Referencing the container where repeated divs will be added...
+      const container = document.getElementById("radioContainer");
+
+      // Event listener function to handle the selection
+      function handleRadioSelection(event) {
+        openPopup();
+        // getting selected label from ui---
+
+        const labelText =
+          event.currentTarget.querySelector(".radio-label").textContent;
+        console.log("Selected label:", labelText);
+
+        // Remove active class from all custom-radio divs
+        const customRadios = container.querySelectorAll(".custom-radio");
+        customRadios.forEach((radio) => {
+          radio.classList.remove("active");
+        });
+
+        // Add active class to the clicked custom-radio div
+        event.currentTarget.classList.add("active");
+      }
+
+      divData.forEach((data) => {
+        const customRadioDiv = document.createElement("div");
+        customRadioDiv.className = "custom-radio";
+        customRadioDiv.innerHTML = `
+          <div class="icon"><img src="${data.icon}" alt="Icon" /></div>
+          <div class="radio-content">
+            <div class="radio-label">${data.label}</div>
+            <p class="description">${data.description}</p>
+          </div>
+          <div class="next-arrow">
+            <img src="/images/next-arrow.png" alt="Next Arrow Icon" />
+          </div>
+        `;
+
+        customRadioDiv.addEventListener("click", handleRadioSelection);
+        container.appendChild(customRadioDiv);
+      });
+    </script>
   </body>
 </html>
+
+<!-- <form
+id="frmUploader"
+class="form"
+enctype="multipart/form-data"
+action="/upload"
+method="post"
+>
+<input type="file" class="file" name="image" hidden />
+<button
+  class="btn"
+  style="font-weight: 600"
+  id="btnSubmit"
+  onclick="loader()"
+>
+  Upload
+</button>
+</form> -->

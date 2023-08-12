@@ -152,3 +152,39 @@ function createRipple(e) {
   //console.log("enter");
   circle.classList.add("ripple");
 }
+
+// smoothe scrool to pasrtcular div
+
+function scrollToDiv(divId) {
+  var selectedDiv = document.getElementById(divId);
+  if (selectedDiv) {
+    selectedDiv.scrollIntoView({ behavior: "smooth" });
+  }
+}
+
+// javascript for popup modal only
+function openPopup() {
+  const modal = document.getElementById("popupModal");
+  modal.style.display = "block";
+}
+
+function closePopup() {
+  const modal = document.getElementById("popupModal");
+  modal.style.display = "none";
+}
+
+// Attach the openPopup function to the button's click event
+const openBtn = document.getElementById("openPopupBtn");
+openBtn.addEventListener("click", openPopup);
+
+// Attach the closePopup function to the close button's click event
+const closeBtn = document.getElementById("closePopupBtn");
+closeBtn.addEventListener("click", closePopup);
+
+// Attach the closePopup function to the window's click event
+window.addEventListener("click", (event) => {
+  const modal = document.getElementById("popupModal");
+  if (event.target == modal) {
+    closePopup();
+  }
+});
