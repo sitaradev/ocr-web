@@ -28,7 +28,13 @@
   </head>
   <body>
     <div id="snackbar">Please Upload a File</div>
+    <div id="spinner-body">
+      <img src="images/Spinner.svg" alt="" />
 
+      <h2>Please wait ....</h2>
+      <!-- original loader-->
+      <!-- <img src="images/please-wait.gif" alt="please-wait-loding" /> -->
+    </div>
     <!-- // new test div -->
     <div class="hero">
       <div class="logo-top">
@@ -95,9 +101,16 @@
             action="/upload"
             method="post"
           >
-            <img src="/images/documents.png" alt="documents-img" />
-            <h2>Drag and drop your files here</h2>
-            <p>Supported Formats: PDF, XLXSS, Doc, Image Size: upto 10MB</p>
+            <img
+              src="/images/documents.png"
+              alt="documents-img"
+              id="img-preview"
+              class="show-img-preview"
+            />
+            <h2 id="drag-text-heading">Drag and drop your files here</h2>
+            <p id="drag-text-info">
+              Supported Formats: PDF, XLXSS, Doc, Image Size: up to 10MB
+            </p>
             <input type="file" class="file" name="image" hidden />
           </form>
           <button
@@ -216,21 +229,3 @@
     </script>
   </body>
 </html>
-
-<!-- <form
-id="frmUploader"
-class="form"
-enctype="multipart/form-data"
-action="/upload"
-method="post"
->
-<input type="file" class="file" name="image" hidden />
-<button
-  class="btn"
-  style="font-weight: 600"
-  id="btnSubmit"
-  onclick="loader()"
->
-  Upload
-</button>
-</form> -->

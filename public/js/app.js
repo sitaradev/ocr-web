@@ -1,5 +1,4 @@
 //selecting all required elements
-// console.log(" is", labelText);
 var flag = false;
 const dropArea = document.querySelector(".modal-content"),
   dragText = dropArea.querySelector("header"),
@@ -19,7 +18,7 @@ input.addEventListener("change", function () {
     flag = true;
   }
   dropArea.classList.add("active");
-  // showFile();
+  showFile();
   //calling function // add later i just removed for now
 });
 /*
@@ -58,14 +57,19 @@ function showFile() {
     let fileReader = new FileReader(); //creating new FileReader object
     fileReader.onload = () => {
       let fileURL = fileReader.result; //passing user file source in fileURL variable
+      const imgElement = document.querySelector(".show-img-preview");
 
-      // UNCOMMENT THIS BELOW LINE. I GOT AN ERROR WHILE UPLOADING THIS POST SO I COMMENTED IT
-      document.querySelector(".top").innerHTML = ""; //creating an img tag and passing user selected file source inside src attribute
-      const img = document.createElement("img");
-      // console.log("fileURL", fileURL);
-      img.src = fileURL;
-      img.classList.add("image");
-      dropArea.appendChild(img); //adding that created img tag inside dropArea container
+      // Remove the id attribute from the element
+      imgElement.removeAttribute("id");
+
+      imgElement.src = fileURL;
+
+      // Remove the duplicated id attributes from the <h2> and <p> elements
+      const dragTextHeading = document.getElementById("drag-text-heading");
+      const dragTextInfo = document.getElementById("drag-text-info");
+
+      dragTextHeading.remove();
+      dragTextInfo.remove();
     };
     fileReader.readAsDataURL(file);
   } else {
@@ -89,7 +93,7 @@ function loader() {
     'input[name="document"]:checked'
   );
 
-  const dropArea = document.querySelector(".drag-area");
+  // const dropArea = document.querySelector(".modal-content");
   const imageInput = document.querySelector('input[name="image"]');
   const flag = imageInput.files.length > 0;
 
@@ -107,10 +111,11 @@ function loader() {
     // return;
     document.querySelector("form").submit();
 
-    const spinner = document.createElement("img");
-    spinner.src = "images/Spinner.svg";
-    spinner.classList.add("spinner");
-    dropArea.appendChild(spinner);
+    document.getElementById("spinner-body").style.display = "flex";
+    // const spinner = document.createElement("img");
+    // spinner.src = "images/Spinner.svg";
+    // spinner.classList.add("spinner");
+    // dropArea.appendChild(spinner);
   } else if (!flag) {
     // Handle image not uploaded scenario
     console.log("Please upload an image");
@@ -136,28 +141,28 @@ function loader() {
   }
 }
 
-var buttons = document.getElementsByTagName("button");
+// var buttons = document.getElementsByTagName("button");
 
-Array.prototype.forEach.call(buttons, function (b) {
-  b.addEventListener("click", createRipple);
-});
+// Array.prototype.forEach.call(buttons, function (b) {
+//   b.addEventListener("click", createRipple);
+// });
 
-function createRipple(e) {
-  if (this.getElementsByClassName("ripple").length > 0) {
-    this.removeChild(this.childNodes[1]);
-  }
+// function createRipple(e) {
+//   if (this.getElementsByClassName("ripple").length > 0) {
+//     this.removeChild(this.childNodes[1]);
+//   }
 
-  var circle = document.createElement("div");
-  this.appendChild(circle);
+//   var circle = document.createElement("div");
+//   this.appendChild(circle);
 
-  var d = Math.max(this.clientWidth, this.clientHeight);
-  circle.style.width = circle.style.height = d + "px";
+//   var d = Math.max(this.clientWidth, this.clientHeight);
+//   circle.style.width = circle.style.height = d + "px";
 
-  circle.style.left = e.clientX - this.offsetLeft - d / 2 + "px";
-  circle.style.top = e.clientY - this.offsetTop - d / 2 + "px";
-  //console.log("enter");
-  circle.classList.add("ripple");
-}
+//   circle.style.left = e.clientX - this.offsetLeft - d / 2 + "px";
+//   circle.style.top = e.clientY - this.offsetTop - d / 2 + "px";
+//   //console.log("enter");
+//   circle.classList.add("ripple");
+// }
 
 // smoothe scrool to pasrtcular div
 

@@ -96,6 +96,34 @@ body {
   animation: ripple 0.6s linear;
 }
 
+/* CSS for spinner-body */
+#spinner-body {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: transparent;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 9999;
+}
+#spinner-body > h2 {
+  color: #0b38b6;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+#spinner-body > img {
+  width: 100px;
+  height: 100px;
+}
+
 @keyframes ripple {
   10% {
     transform: scale(1.1);
@@ -411,7 +439,6 @@ body {
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
-  z-index: 1000; /* Sit on top */
   left: 0;
   top: 0;
   width: 100%;
@@ -426,19 +453,23 @@ body {
   margin: 15% auto; /* 15% from the top and centered */
   /* padding: 20px; */
   border: 1px solid #888;
-  width: 50%;
-  height: 60%;
+  max-width: 658px;
+  max-height: 453px;
+  width: 100%;
+  height: 100%;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2%;
   padding: 2%;
+  z-index: 10000; /* Ensure the modal is above the spinner */
 }
 .modal-header {
   display: flex;
   flex-direction: row;
-  width: 95%;
+  max-width: 591px;
+  width: 100%;
   justify-content: space-between;
 }
 .modal-header > h2 {
@@ -450,9 +481,9 @@ body {
 /* Close button */
 .close {
   color: white;
-  background-color: #e6e6e6;
+  background-color: #7070705c;
   float: right;
-  font-size: 28px;
+  font-size: 25px;
   font-weight: bold;
   border-radius: 50px;
   padding: 10px;
@@ -461,7 +492,7 @@ body {
   text-align: center;
   position: relative;
   top: -25px;
-  right: -20px;
+  right: -30px;
 }
 
 .close:hover,
@@ -473,9 +504,11 @@ body {
 .form-container {
   background-color: #f2f8ff;
   border: 3px dotted #007eee;
-  width: 95%;
+  max-width: 591px;
+  max-height: 252px;
+  width: 100%;
+  height: 100%;
   padding: 10px;
-  height: 70%;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -494,9 +527,17 @@ body {
   align-items: center;
   text-align: center;
 }
-.form > img {
+
+.form > #img-preview {
   width: 60px;
   height: 60px;
+}
+/* only for preview img */
+.show-img-preview {
+  padding: 5px;
+  max-width: 200px;
+  max-height: 160px;
+  object-fit: contain;
 }
 .form > h2 {
   font-size: 28px;
