@@ -250,7 +250,11 @@ body {
   width: 100%;
 }
 .logo-top > h2 {
-  font-size: 22px;
+  font-size: 24px;
+  font-weight: 500;
+}
+#logo-text {
+  margin-top: 20px;
   font-weight: 500;
 }
 /* hero-Top */
@@ -394,12 +398,14 @@ body {
   cursor: pointer;
   padding: 10px;
   /* border: 1px solid transparent; */
+  box-shadow: 0px 3px 6px transparent;
+  border: 1px solid transparent;
 }
 
 .custom-radio:hover {
   border-color: #0288ff; /* Change border color for active container */
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  /* border: 2px solid rgb(247, 247, 247); */
+  box-shadow: 0px 3px 6px #88888829;
+  border: 1px solid #f8f8f8;
   border-radius: 8px;
   background-color: #ffffff; /* Change background color for active container */
 }
@@ -407,8 +413,8 @@ body {
 .custom-radio.active {
   border-color: #0288ff; /* Change border color for active container */
   background-color: #ffffff; /* Change background color for active container */
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  border: 2px solid #f8f5f5;
+  box-shadow: 0px 3px 6px #88888829;
+  border: 1px solid #f8f8f8;
   border-radius: 10px;
 }
 
@@ -677,7 +683,7 @@ body {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-top: 3%;
+  margin-top: 2%;
 }
 .heading_btns {
   display: flex;
