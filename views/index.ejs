@@ -10,8 +10,9 @@
 
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      href="https://fonts.googleapis.com/css2?family=Segoe+UI&display=swap"
     />
+
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
@@ -42,10 +43,12 @@
       </div>
       <div class="hero-main">
         <div class="hero-left">
-          <h3>
-            <span style="color: rgb(31, 31, 242)">Scan</span>, Simplify,
-            Succeed: <br />
-            Your Paperless Pathway
+          <h3 style="display: flex; flex-direction: column; gap: 20px">
+            <span>
+              <span style="color: #2386f6">Scan</span>, Simplify, Succeed:
+              <br />
+            </span>
+            <span> Your Paperless Pathway </span>
           </h3>
           <p>
             Document digital scanning by drag and drop is a user-friendly and
@@ -62,7 +65,7 @@
       </div>
     </div>
 
-    <!-- area fro upload  docs -->
+    <!-- area for upload  image -->
     <div class="upload-main" id="uploadDiv">
       <div class="upload-popup">
         <img src="../images/upload-img.png" alt="" />
@@ -88,9 +91,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h2>Upload your files</h2>
-          <span class="close" id="closePopupBtn" onclick="closePopup()"
-            >&times;</span
-          >
+          <span class="close" id="closePopupBtn" onclick="closePopup()">X</span>
         </div>
 
         <div class="form-container">
@@ -109,7 +110,7 @@
             />
             <h2 id="drag-text-heading">Drag and drop your files here</h2>
             <p id="drag-text-info">
-              Supported Formats: PDF, XLXSS, Doc, Image Size: up to 10MB
+              Supported Formats: PDF, Doc, Image Size: up to 10MB
             </p>
             <input type="file" class="file" name="image" hidden />
           </form>
@@ -131,14 +132,14 @@
               id="input-url"
               placeholder="Add the file link"
             />
-            <button
+            <img
+              src="/images/right-arrow.png"
+              alt=""
               class="btn-submit-form"
               style="font-weight: 600"
               id="btnSubmit"
               onclick="loader()"
-            >
-              Upload
-            </button>
+            />
           </div>
         </div>
       </div>

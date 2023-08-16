@@ -1,5 +1,5 @@
 const express = require("express");
-const app = express(); // initialize app
+const app = express();
 const fsPromises = require("fs").promises;
 require("dotenv").config();
 var result;
@@ -11,13 +11,12 @@ const fs = require("fs");
 const mindee = require("mindee");
 const bodyParser = require("body-parser");
 
-// Use bodyParser middleware to parse form data
 app.use(bodyParser.urlencoded({ extended: true }));
 
 var Tesseract = require("tesseract.js");
 app.use(express.static("public"));
 const mindeeClient = new mindee.Client({
-  apiKey: "4e104512c1c2712dff7c2b7efb811824",
+  apiKey: "ce5af6b2fba058822463fcd724f081cb",
 });
 
 function getFilePath(path) {
@@ -26,6 +25,7 @@ function getFilePath(path) {
   var filePath = newId + "-" + path;
   return filePath;
 }
+
 var filePath;
 var Storage = multer.diskStorage({
   destination: (req, file, callback) => {
@@ -40,9 +40,6 @@ var Storage = multer.diskStorage({
 var upload = multer({
   storage: Storage,
 }).single("image");
-//route
-
-let extractedData;
 
 app.post("/upload", async (req, res) => {
   try {
@@ -56,23 +53,17 @@ app.post("/upload", async (req, res) => {
         encoding: null,
       });
 
-      console.log("red.body", req.body);
-      console.log("image", image);
-
       // Assuming this part was missing in the previous snippet
       try {
         const {
           data: { text },
         } = await Tesseract.recognize(image, "eng");
         result = text;
-      } catch (tesseractError) {
-        console.error("Tesseract error:", tesseractError);
-      }
+      } catch (tesseractError) {}
 
       // Retrieve the selected API value from the form
       const selectedApi = req.body.selectedApi;
 
-      console.log("selectedApi is", selectedApi);
       var doc;
       try {
         switch (selectedApi) {
@@ -87,12 +78,10 @@ app.post("/upload", async (req, res) => {
             // Call the Mindee API for Receipt
             doc = mindeeClient.docFromPath(__dirname + "/images/" + filePath);
             var resp = await doc.parse(mindee.ReceiptV3);
-            console.log("resp of Receipt", resp);
             break;
 
           case "Passport":
             // Call the Mindee API for Passport
-            console.log("Passport hit");
             doc = mindeeClient.docFromPath(__dirname + "/images/" + filePath);
             var resp = await doc.parse(mindee.PassportV1);
             break;

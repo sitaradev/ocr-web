@@ -4,23 +4,38 @@ const dropArea = document.querySelector(".modal-content"),
   dragText = dropArea.querySelector("header"),
   button = dropArea.querySelector(".browse"),
   input = dropArea.querySelector("input");
+let inputElement = document.getElementById("input-url");
 
 let file; //this is a global variable and we'll use it inside multiple functions
-
+let img_url = null;
 button.onclick = () => {
   input.click();
 };
 
 input.addEventListener("change", function () {
-  //getting user select file and [0] this means if user select multiple files then we'll select only the first one
+  console.log("img-upload");
   file = this.files[0];
   if (file) {
+    // Process the file upload here
     flag = true;
+    dropArea.classList.add("active");
+    showFile();
+    console.log("file", file);
   }
-  dropArea.classList.add("active");
-  showFile();
-  //calling function // add later i just removed for now
 });
+
+inputElement.addEventListener("input", function () {
+  img_url = inputElement.value; // Store the URL string
+  console.log("img_url - ", img_url);
+
+  if (img_url) {
+    flag = true;
+    // Process the URL input here
+    dropArea.classList.add("active");
+    showFile();
+  }
+});
+
 /*
 //If user Drag File Over DropArea
 dropArea.addEventListener("dragover", (event) => {
@@ -48,40 +63,59 @@ dropArea.addEventListener("drop", (event) => {
   showFile(); //calling function
 });
 */
+
 function showFile() {
-  console.log("showFile fn called");
-  let fileType = file.type; //getting selected file type
-  let validExtensions = ["image/jpeg", "image/jpg", "image/png"]; //adding some valid image extensions in array
-  if (validExtensions.includes(fileType)) {
-    //if user selected file is an image file
-    let fileReader = new FileReader(); //creating new FileReader object
-    fileReader.onload = () => {
-      let fileURL = fileReader.result; //passing user file source in fileURL variable
-      const imgElement = document.querySelector(".show-img-preview");
+  if (img_url !== null) {
+    console.log("img-url");
+    flag = true;
+    const imgElement = document.querySelector(".show-img-preview");
+    // Remove the id attribute from the element
+    imgElement.removeAttribute("id");
 
-      // Remove the id attribute from the element
-      imgElement.removeAttribute("id");
+    imgElement.src = img_url;
 
-      imgElement.src = fileURL;
+    // Remove the duplicated id attributes from the <h2> and <p> elements
+    const dragTextHeading = document.getElementById("drag-text-heading");
+    const dragTextInfo = document.getElementById("drag-text-info");
 
-      // Remove the duplicated id attributes from the <h2> and <p> elements
-      const dragTextHeading = document.getElementById("drag-text-heading");
-      const dragTextInfo = document.getElementById("drag-text-info");
-
-      dragTextHeading.remove();
-      dragTextInfo.remove();
-    };
-    fileReader.readAsDataURL(file);
+    dragTextHeading.remove();
+    dragTextInfo.remove();
+    console.log("img url in show file", img_url);
   } else {
-    // alert("This is not an Image File!");
+    let fileType = file.type; //getting selected file type
+    let validExtensions = ["image/jpeg", "image/jpg", "image/png"]; //adding some valid image extensions in array
+    if (validExtensions.includes(fileType)) {
+      //if user selected file is an image file
+      let fileReader = new FileReader(); //creating new FileReader object
+      fileReader.onload = () => {
+        let fileURL = fileReader.result; //passing user file source in fileURL variable
+        const imgElement = document.querySelector(".show-img-preview");
 
-    const snackbar = document.getElementById("snackbar");
-    snackbar.textContent =
-      "This is not an Image File! please choose a valid image only";
-    snackbar.className = "show";
+        // Remove the id attribute from the element
+        imgElement.removeAttribute("id");
 
-    dropArea.classList.remove("active");
-    dragText.textContent = "Drag & Drop to Upload File";
+        imgElement.src = fileURL;
+
+        // Remove the duplicated id attributes from the <h2> and <p> elements
+        const dragTextHeading = document.getElementById("drag-text-heading");
+        const dragTextInfo = document.getElementById("drag-text-info");
+
+        dragTextHeading.remove();
+        dragTextInfo.remove();
+      };
+
+      fileReader.readAsDataURL(file);
+    } else {
+      // alert("This is not an Image File!");
+
+      const snackbar = document.getElementById("snackbar");
+      snackbar.textContent =
+        "This is not an Image File! please choose a valid image only";
+      snackbar.className = "show";
+
+      dropArea.classList.remove("active");
+      dragText.textContent = "Drag & Drop to Upload File";
+    }
   }
 }
 
@@ -96,9 +130,10 @@ function loader() {
   // const dropArea = document.querySelector(".modal-content");
   const imageInput = document.querySelector('input[name="image"]');
   const flag = imageInput.files.length > 0;
+  const url_flag = img_url !== null;
 
   // alert(selectedRadio.innerHTML);
-  if (flag && labelText) {
+  if (flag || (url_flag && labelText)) {
     // Get the value of the selected radio button
     const selectedApi = labelText;
     // Send the selected API value as a hidden input field in the form
@@ -116,7 +151,7 @@ function loader() {
     // spinner.src = "images/Spinner.svg";
     // spinner.classList.add("spinner");
     // dropArea.appendChild(spinner);
-  } else if (!flag) {
+  } else if (!flag || !url_flag) {
     // Handle image not uploaded scenario
     console.log("Please upload an image");
 
