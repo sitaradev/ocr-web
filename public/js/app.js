@@ -1,9 +1,18 @@
 //selecting all required elements
-var flag = false;
+flag = false;
 const dropArea = document.querySelector(".modal-content"),
   dragText = dropArea.querySelector("header"),
   button = dropArea.querySelector(".browse"),
   input = dropArea.querySelector("input");
+// Selecting all required elements
+// var flag = false;
+// var url_flag = false;
+// var dragTextHeading = document.getElementById("drag-text-heading");
+// var dragTextInfo = document.getElementById("drag-text-info");
+// var inputElement = document.getElementById("input-url");
+// var imgElement = document.querySelector(".show-img-preview");
+// var dropArea = document.querySelector(".modal-content");
+var labelText = null;
 let inputElement = document.getElementById("input-url");
 
 let file; //this is a global variable and we'll use it inside multiple functions
@@ -111,7 +120,7 @@ function showFile() {
       snackbar.textContent =
         "This is not an Image File! please choose a valid image only";
       snackbar.className = "show";
-
+      flag = false;
       dropArea.classList.remove("active");
       dragText.textContent = "Drag & Drop to Upload File";
     }
@@ -122,17 +131,19 @@ function loader() {
   event.preventDefault();
   console.log("labelText", labelText);
 
-  const selectedRadio = document.querySelector(
-    'input[name="document"]:checked'
-  );
+  // const selectedRadio = document.querySelector(
+  //   'input[name="document"]:checked'
+  // );
 
-  // const dropArea = document.querySelector(".modal-content");
-  const imageInput = document.querySelector('input[name="image"]');
-  const flag = imageInput.files.length > 0;
+  // // const dropArea = document.querySelector(".modal-content");
+  // const imageInput = document.querySelector('input[name="image"]');
+  // const flag = imageInput.files.length > 0;
   const url_flag = img_url !== null;
 
   // alert(selectedRadio.innerHTML);
-  if (flag || (url_flag && labelText)) {
+  if (flag !== false && labelText) {
+    console.log("flag", flag);
+    console.log("url_flag", url_flag);
     // Get the value of the selected radio button
     const selectedApi = labelText;
     // Send the selected API value as a hidden input field in the form
@@ -151,6 +162,9 @@ function loader() {
     // spinner.classList.add("spinner");
     // dropArea.appendChild(spinner);
   } else if (!flag || !url_flag) {
+    console.log("flag", flag);
+    console.log("url_flag", url_flag);
+
     // Handle image not uploaded scenario
     console.log("Please upload an image");
 
@@ -211,23 +225,27 @@ function scrollToDiv(divId) {
 function openPopup() {
   const modal = document.getElementById("popupModal");
   modal.style.display = "block";
+
+  // imgElement.src = img_url;
 }
 
+// Close the popup modal
 function closePopup() {
+  console.log("flag in poppclose", flag);
+
+  flag = false;
+  url_flag = false;
   file = null;
   img_url = null;
   console.log("closePopup clicked");
+  console.log("flag in poppclose", flag);
+
   // Hide the modal
   const modal = document.getElementById("popupModal");
   modal.style.display = "none";
-  const img_preview_remove = document.querySelector("#img-preview");
-  // Remove the dupimg_preview_removelicated id attributes from the <h2> and <p> elements
-  const dragTextHeading = document.getElementById("drag-text-heading");
-  const dragTextInfo = document.getElementById("drag-text-info");
 
-  console.log("img_preview_remove", img_preview_remove);
-  console.log("dragTextHeading", dragTextHeading);
-  console.log("dragTextInfo", dragTextInfo);
+  const imgElement = document.querySelector(".show-img-preview");
+  imgElement.src = "./images/documents.png";
 
   if (dragTextHeading && dragTextInfo) {
     // Create new elements with unique id attributes
@@ -244,7 +262,6 @@ function closePopup() {
     dragTextInfo.replaceWith(newDragTextInfo);
   }
 }
-
 // Attach the openPopup function to the button's click event
 const openBtn = document.getElementById("openPopupBtn");
 // openBtn.addEventListener("click", openPopup);

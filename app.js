@@ -135,7 +135,7 @@ app.get("/showdata", async (req, res) => {
     .replace(/\n\s*\n/g, "\n") // Remove empty lines
     .trim(); // Trim leading and trailing spaces
 
-  res.render("result.ejs", { text: result, extractedData: textOnly });
+  res.render("success.ejs", { text: result, extractedData: textOnly });
 });
 
 app.get("/", (req, res) => {
