@@ -20,7 +20,6 @@ input.addEventListener("change", function () {
     flag = true;
     dropArea.classList.add("active");
     showFile();
-    console.log("file", file);
   }
 });
 
@@ -215,8 +214,35 @@ function openPopup() {
 }
 
 function closePopup() {
+  file = null;
+  img_url = null;
+  console.log("closePopup clicked");
+  // Hide the modal
   const modal = document.getElementById("popupModal");
   modal.style.display = "none";
+  const img_preview_remove = document.querySelector("#img-preview");
+  // Remove the dupimg_preview_removelicated id attributes from the <h2> and <p> elements
+  const dragTextHeading = document.getElementById("drag-text-heading");
+  const dragTextInfo = document.getElementById("drag-text-info");
+
+  console.log("img_preview_remove", img_preview_remove);
+  console.log("dragTextHeading", dragTextHeading);
+  console.log("dragTextInfo", dragTextInfo);
+
+  if (dragTextHeading && dragTextInfo) {
+    // Create new elements with unique id attributes
+    const newDragTextHeading = document.createElement("h2");
+    newDragTextHeading.textContent = "New Drag Text Heading";
+    newDragTextHeading.id = "new-drag-text-heading"; // Assign a unique id
+
+    const newDragTextInfo = document.createElement("p");
+    newDragTextInfo.textContent = "New Drag Text Info";
+    newDragTextInfo.id = "new-drag-text-info"; // Assign a unique id
+
+    // Replace the removed elements with the new elements
+    dragTextHeading.replaceWith(newDragTextHeading);
+    dragTextInfo.replaceWith(newDragTextInfo);
+  }
 }
 
 // Attach the openPopup function to the button's click event
@@ -226,11 +252,3 @@ const openBtn = document.getElementById("openPopupBtn");
 // Attach the closePopup function to the close button's click event
 const closeBtn = document.getElementById("closePopupBtn");
 closeBtn.addEventListener("click", closePopup);
-
-// Attach the closePopup function to the window's click event
-window.addEventListener("click", (event) => {
-  const modal = document.getElementById("popupModal");
-  if (event.target == modal) {
-    closePopup();
-  }
-});
