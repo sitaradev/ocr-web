@@ -19,51 +19,60 @@
     <title>Result</title>
   </head>
   <body>
-    <a style="color: #fff; text-decoration: none; font-weight: 600" href="/"
-      ><button class="btn">Convert Again</button></a
-    >
-
-    <h1 style="color: #fff; text-align: center">
-      Here's what we could extract
-    </h1>
-    <div class="text">
-      <h2>Mindee Extracted Data</h2>
-      <pre><%= extractedData %></pre>
-      <i style="font-size: 0.8rem; text-align: center"
-        >We don't keep your data, your images are deleted as soon as they are
-        processed.</i
-      >
+    <div class="main_result">
+      <div class="logo-top">
+        <h2 id="logo-text">ELLOCR</h2>
+      </div>
+      <div class="result_heading">
+        <div>
+          <h2 style="font-size: 34px; font-weight: 100; letter-spacing: 1px">
+            Result
+          </h2>
+        </div>
+        <div class="heading_btns">
+          <button id="save_drive">Save to Google Drive</button>
+          <button id="download_now" class="btn">
+            Download <span> <img src="images/arrow-down.svg" alt="" /> </span>
+          </button>
+        </div>
+      </div>
+      <div class="result-data">
+        <pre><%= extractedData %></pre>
+      </div>
+      <div class="new_scan">
+        <a href="/">
+          <button id="scan_now_btn">Scan More</button>
+        </a>
+      </div>
     </div>
-
-    <button class="btn" id="dnBtn">Download .txt file</button>
   </body>
   <script>
-    document.querySelector("#dnBtn").addEventListener("click", () => {
+    document.querySelector("#download_now").addEventListener("click", () => {
       var text = `<%= text %>`;
       download(text, "result.txt", "text/plain");
     });
 
-    var buttons = document.getElementsByTagName("button");
+    // var buttons = document.getElementsByTagName("button");
 
-    Array.prototype.forEach.call(buttons, function (b) {
-      b.addEventListener("click", createRipple);
-    });
+    // Array.prototype.forEach.call(buttons, function (b) {
+    //   b.addEventListener("click", createRipple);
+    // });
 
-    function createRipple(e) {
-      if (this.getElementsByClassName("ripple").length > 0) {
-        this.removeChild(this.childNodes[1]);
-      }
+    // function createRipple(e) {
+    //   if (this.getElementsByClassName("ripple").length > 0) {
+    //     this.removeChild(this.childNodes[1]);
+    //   }
 
-      var circle = document.createElement("div");
-      this.appendChild(circle);
+    //   var circle = document.createElement("div");
+    //   this.appendChild(circle);
 
-      var d = Math.max(this.clientWidth, this.clientHeight);
-      circle.style.width = circle.style.height = d + "px";
+    //   var d = Math.max(this.clientWidth, this.clientHeight);
+    //   circle.style.width = circle.style.height = d + "px";
 
-      circle.style.left = e.clientX - this.offsetLeft - d / 2 + "px";
-      circle.style.top = e.clientY - this.offsetTop - d / 2 + "px";
-      //console.log("enter");
-      circle.classList.add("ripple");
-    }
+    //   circle.style.left = e.clientX - this.offsetLeft - d / 2 + "px";
+    //   circle.style.top = e.clientY - this.offsetTop - d / 2 + "px";
+    //   //console.log("enter");
+    //   circle.classList.add("ripple");
+    // }
   </script>
 </html>

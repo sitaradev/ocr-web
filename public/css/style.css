@@ -1,9 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  /* font-family: "Poppins", sans-serif; */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 body {
   display: flex;
@@ -11,7 +11,8 @@ body {
   justify-content: space-evenly;
   min-height: 100vh;
   flex-direction: column;
-  background: url("/images/bgsvg.svg");
+  background-color: #ffffff;
+  font-family: "Segoe UI", sans-serif;
 }
 .title {
   color: #fff;
@@ -70,7 +71,7 @@ body {
   max-width: 100px;
   max-height: 100px;
 }
-.btn {
+/* .btn {
   margin: 2rem;
   border: none;
   display: inline-block;
@@ -94,6 +95,34 @@ body {
   position: absolute;
   transform: scale(0);
   animation: ripple 0.6s linear;
+} */
+
+/* CSS for spinner-body */
+#spinner-body {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: transparent;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 9999;
+}
+#spinner-body > h2 {
+  color: #0b38b6;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+#spinner-body > img {
+  width: 100px;
+  height: 100px;
 }
 
 @keyframes ripple {
@@ -205,11 +234,126 @@ body {
   }
 }
 
-.main {
+/* logo-top */
+
+.hero {
+  padding: 4%;
+  padding-top: 1%;
+  height: 92vh; /* Use 100vh for full viewport height */
+  width: 100vw; /* Use 100vw for full viewport width */
+}
+.logo-top {
+  /* background-color: gainsboro; */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   width: 100%;
+}
+.logo-top > h2 {
+  font-size: 24px;
+  font-weight: 500;
+}
+#logo-text {
+  margin-top: 20px;
+  font-weight: 500;
+}
+/* hero-Top */
+.hero-main {
+  /* background-color: gainsboro; */
   display: flex;
   flex-direction: row;
-  justify-content: center; /* Center vertically */
+  gap: 2%;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  /* align-items: center; */
+}
+
+.hero-left {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-bottom: 5%;
+}
+.hero-left > h3 {
+  font-size: 64px;
+  letter-spacing: 2px;
+  font-weight: 400;
+
+  /* font-weight: 600; */
+}
+.hero-left > p {
+  color: #555657;
+  font-size: 16px;
+  font-weight: lighter;
+  width: 90%;
+}
+.hero-left > button {
+  width: 142px;
+  height: 57px;
+  /* UI Properties */
+  font-weight: 100;
+  letter-spacing: 1px;
+  color: white;
+  background-color: #00121a;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.hero-right {
+  background-color: #73cff052;
+  width: 40%;
+  height: 78%;
+  display: flex;
+  padding: 10%;
+  flex-direction: row;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  margin-bottom: 5%;
+  border-radius: 50%;
+}
+
+.hero-right > img {
+  width: 516px;
+  height: 341px;
+  /* object-fit: cover; Preserve aspect ratio and cover container */
+  /* border-radius: 50%; Match the container's border-radius */
+}
+
+/* upload-main */
+.upload-main {
+  background-color: #f4fbfe;
+  /* background-color: #00121a; */
+  padding: 4%;
+  height: 100vh; /* Use 100vh for full viewport height */
+  width: 100vw; /* Use 100vw for full viewport width */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5%;
+}
+.upload-popup {
+  /* background-color: rebeccapurple; */
+  height: 100%;
+  width: 50%;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.upload-type {
+  /* background-color: green; */
+  height: 100%;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
   align-items: center; /* Center horizontally */
   gap: 1%;
   /* background-color: #d72323; */
@@ -217,21 +361,379 @@ body {
   margin-top: 2%;
 }
 
-.main > label {
-  display: flex; /* Add flex display for alignment */
-  font-size: 18px;
-  align-items: center; /* Center label content vertically */
-  justify-content: center; /* Center label content horizontally */
-  margin-bottom: 10px;
-  padding: 10px; /* Increase padding for better spacing */
-  border: 2px solid #ffffff; /* Add border */
-  border-radius: 5%; /* Make it circular */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add box shadow */
+.upload-inner {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  letter-spacing: 2px;
+  margin-bottom: 5px;
+  /* background-color: #d72323; */
+}
+.upload-inner > h2 {
+  font-size: 42px;
+  font-weight: 200;
+  letter-spacing: 2px;
+}
+.upload-inner > p {
+  font-size: 14px;
+  font-weight: 100;
+}
+.lables-inner {
+  width: 100%;
+  height: 100%;
+}
+/* Styling for the custom radio container */
+.custom-radio-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  gap: 20px;
+}
+.custom-radio {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px;
+  /* border: 1px solid transparent; */
+  box-shadow: 0px 3px 6px transparent;
+  border: 1px solid transparent;
 }
 
-.main > label > input[type="radio"] {
-  width: 25px;
-  height: 25px;
+.custom-radio:hover {
+  border-color: #0288ff; /* Change border color for active container */
+  box-shadow: 0px 3px 6px #88888829;
+  border: 1px solid #f8f8f8;
+  border-radius: 8px;
+  background-color: #ffffff; /* Change background color for active container */
+}
+
+.custom-radio.active {
+  border-color: #0288ff; /* Change border color for active container */
+  background-color: #ffffff; /* Change background color for active container */
+  box-shadow: 0px 3px 6px #88888829;
+  border: 1px solid #f8f8f8;
+  border-radius: 10px;
+}
+
+.icon {
+  margin-right: 10px;
+  background-color: #6cbaff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.radio-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.radio-label {
+  font-weight: bold;
+  font-size: 22px;
+}
+
+.description {
+  margin-top: 5px;
+  font-size: 18px;
+  font-weight: 300;
+}
+
+.next-arrow {
+  margin-top: 4%;
+  margin-left: 10px;
+}
+
+.custom-radio.active .radio-label {
+  color: #0288ff; /* Change label color for selected div */
+}
+
+/* Style for the modal */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); /* Black background with transparency */
+  animation: animatetop ease-out 0.3s forwards;
+}
+
+/* Modal content */
+.modal-content {
+  background-color: #ffffff;
+  margin: 15% auto; /* 15% from the top and centered */
+  border: 1px solid #7070705c;
+  border-radius: 11px;
+  max-width: 658px;
+  max-height: 453px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  /* gap: 4%; */
+  /* padding: 2%; */
+  z-index: 10000; /* Ensure the modal is above the spinner */
+}
+.modal-header {
+  display: flex;
+  flex-direction: row;
+  max-width: 591px;
+  width: 100%;
+  justify-content: space-between;
+}
+.modal-header > h2 {
+  color: black;
+  font-size: 32px;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+.modal-header > span {
+  font-size: 28px;
+  font-weight: 100;
+  border-radius: 50%;
+  color: #f7f4f4;
+  text-align: center;
+}
+/* Close button */
+.close {
+  color: white;
+  background-color: #7070705c;
+  padding-top: 4px;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  position: relative;
+  top: -10px;
+  right: -20px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
   cursor: pointer;
-  margin-right: 10px; /* Adjust margin to separate radio from label */
+}
+.form-container {
+  background-color: #f2f8ff;
+  border: 3px dotted #007eee;
+  max-width: 591px;
+  max-height: 252px;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.form {
+  width: 90%;
+  padding: 12px;
+  height: 70%;
+  display: flex;
+  border-radius: 10px;
+  flex-direction: column;
+  justify-content: center;
+  /* gap: 5%; */
+  align-items: center;
+  text-align: center;
+}
+
+.form > #img-preview {
+  width: 60px;
+  height: 60px;
+}
+/* only for preview img */
+.show-img-preview {
+  padding: 5px;
+  max-width: 200px;
+  max-height: 160px;
+  object-fit: contain;
+}
+.form > h2 {
+  font-size: 28px;
+  font-weight: 400;
+  margin-bottom: 2%;
+}
+.form > p {
+  font-size: 18px;
+  font-weight: 200;
+  margin-top: 2%;
+  color: #707070;
+}
+.form > p {
+  font-size: 18px;
+  font-weight: 200;
+  margin-top: 2%;
+  color: #707070;
+}
+.upload-btn {
+  color: #007eee;
+  font-size: 16px;
+  font-weight: 400;
+  width: 114px;
+  height: 45px;
+  cursor: pointer;
+  border-radius: 6px;
+  background-color: white;
+  padding: 12px;
+  border: none;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.btn-submit-form {
+  color: #007eee;
+  font-size: 16px;
+  cursor: pointer;
+  outline: none;
+  cursor: pointer;
+  border-radius: 6px;
+  background-color: white;
+  padding: 12px;
+  border: none;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  padding: 12px;
+}
+.paste-url {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.url-submit {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  border: 1px solid #ababab;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 4px;
+  margin-top: 5px;
+}
+.paste-url > p {
+  font-size: 18px;
+}
+.url-submit > input {
+  width: 90%;
+  max-height: 43px;
+  height: 100%;
+  outline: none;
+  border: none;
+  padding-left: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 400;
+}
+.url-submit > img {
+  max-height: 52px;
+  max-width: 52px;
+  outline: none;
+  border: none;
+}
+/* Add Animation */
+@-webkit-keyframes animatetop {
+  from {
+    top: -300px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes animatetop {
+  from {
+    top: -300px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}
+
+/* // show result */
+.main_result {
+  display: flex;
+  flex-direction: column;
+  gap: 2%;
+  width: 90%;
+  height: 100vh;
+}
+
+.result_heading {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2%;
+}
+.heading_btns {
+  display: flex;
+  flex-direction: row;
+  gap: 5%;
+}
+.heading_btns > #save_drive {
+  width: 201px;
+  height: 57px;
+  /* UI Properties */
+  border: 2px solid #2cb6e9;
+  border-radius: 6px;
+  opacity: 1;
+  font-size: 16px;
+  padding: 10px;
+}
+.heading_btns > #download_now {
+  width: 147px;
+  height: 57px;
+  font-size: 16px;
+  padding: 10px;
+  background-color: #00121a;
+  color: white;
+  cursor: pointer;
+  /* UI Properties */
+  border-radius: 6px;
+  opacity: 1;
+}
+.result-data {
+  padding: 10px;
+  max-height: 70vh;
+  height: 100%;
+  /* UI Properties */
+  box-shadow: 0px 3px 6px #00000000;
+  border: 1px solid #dddddd;
+  border-radius: 12px;
+}
+.new_scan > {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+
+#scan_now_btn {
+  width: 147px;
+  height: 57px;
+  /* UI Properties */
+  border: 2px solid #2cb6e9;
+  border-radius: 6px;
+  opacity: 1;
+  float: right;
 }
