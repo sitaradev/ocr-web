@@ -33,10 +33,8 @@
       <img src="images/Spinner.svg" alt="" />
 
       <h2>Please wait ....</h2>
-      <!-- original loader-->
-      <!-- <img src="images/please-wait.gif" alt="please-wait-loding" /> -->
     </div>
-    <!-- // new test div -->
+    <!-- // hero -  ( page-1) -->
     <div class="hero">
       <div class="logo-top">
         <h2>ELLOCR</h2>
@@ -60,12 +58,14 @@
           <button onclick="scrollToDiv('uploadDiv')">Scan Now</button>
         </div>
         <div class="hero-right">
-          <img src="../images/demo-img.png" alt="" />
+          <div class="hero-right-img">
+            <img src="../images/demo-img.png" alt="" />
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- area for upload  image -->
+    <!-- area for upload  image ( page-2) -->
     <div class="upload-main" id="uploadDiv">
       <div class="upload-popup">
         <img src="../images/upload-img.png" alt="" />
@@ -131,15 +131,13 @@
               name=""
               id="input-url"
               placeholder="Add the file link"
+              disabled
             />
-            <img
-              src="/images/right-arrow.png"
-              alt=""
-              class="btn-submit-form"
-              style="font-weight: 600"
-              id="btnSubmit"
-              onclick="loader()"
-            />
+          </div>
+          <div class="submit_div">
+            <button class="btn-submit-form" onclick="loader()">
+              Submit Now
+            </button>
           </div>
         </div>
       </div>
@@ -155,37 +153,37 @@
           icon: "/images/icons/invoice.png",
           label: "Invoice",
           description:
-            "Fleet management is essential for businesses in various....",
+            "Fleet management is essential for businesses in various",
         },
         {
           icon: "/images/icons/reciept.png",
           label: "Receipt",
           description:
-            "Fleet management is essential for businesses in various....",
+            "Crucial role in managing risk and providing financial security",
         },
         {
           icon: "/images/icons/passport.png",
           label: "Passport",
           description:
-            "Fleet management is essential for businesses in various....",
+            "A powerful tool that helps businesses build lasting and profitable",
         },
         {
-          icon: "/images/icons/passport.png",
+          icon: "/images/icons/cheque.png",
           label: "US Bank Check",
           description:
-            "Fleet management is essential for businesses in various....",
+            "Essential components of financial transactions, record-keeping.",
         },
         {
           icon: "/images/icons/license-plate.png",
           label: "License plates",
           description:
-            "Fleet management is essential for businesses in various....",
+            "HR and Payroll are crucial for maintaining a productive",
         },
         {
           icon: "/images/icons/video-player.png",
           label: "Video",
           description:
-            "Fleet management is essential for businesses in various....",
+            "Processes for organizations to effectively track and control.",
         },
       ];
 

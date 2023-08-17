@@ -86,9 +86,8 @@ function showFile() {
     const dragTextHeading = document.getElementById("drag-text-heading");
     const dragTextInfo = document.getElementById("drag-text-info");
 
-    dragTextHeading.remove();
-    dragTextInfo.remove();
-    console.log("img url in show file", img_url);
+    dragTextHeading.innerHTML = "";
+    dragTextInfo.innerHTML = "";
   } else {
     let fileType = file.type; //getting selected file type
     let validExtensions = ["image/jpeg", "image/jpg", "image/png"]; //adding some valid image extensions in array
@@ -108,21 +107,19 @@ function showFile() {
         const dragTextHeading = document.getElementById("drag-text-heading");
         const dragTextInfo = document.getElementById("drag-text-info");
 
-        dragTextHeading.remove();
-        dragTextInfo.remove();
+        dragTextHeading.innerHTML = "";
+        dragTextInfo.innerHTML = "";
       };
 
       fileReader.readAsDataURL(file);
     } else {
-      // alert("This is not an Image File!");
-
       const snackbar = document.getElementById("snackbar");
       snackbar.textContent =
         "This is not an Image File! please choose a valid image only";
       snackbar.className = "show";
       flag = false;
       dropArea.classList.remove("active");
-      dragText.textContent = "Drag & Drop to Upload File";
+      // dragText.textContent = "Drag & Drop to Upload ";
     }
   }
 }
@@ -240,6 +237,16 @@ function closePopup() {
   console.log("closePopup clicked");
   console.log("flag in poppclose", flag);
 
+  // Remove the duplicated id attributes from the <h2> and <p> elements
+  const dragTextHeading = document.getElementById("drag-text-heading");
+  const dragTextInfo = document.getElementById("drag-text-info");
+
+  console.log("dragTextHeading", dragTextHeading);
+  console.log("dragTextInfo", dragTextInfo);
+
+  //  dragTextHeading.remove();
+  //  dragTextInfo.remove();
+
   // Hide the modal
   const modal = document.getElementById("popupModal");
   modal.style.display = "none";
@@ -250,12 +257,13 @@ function closePopup() {
   if (dragTextHeading && dragTextInfo) {
     // Create new elements with unique id attributes
     const newDragTextHeading = document.createElement("h2");
-    newDragTextHeading.textContent = "New Drag Text Heading";
-    newDragTextHeading.id = "new-drag-text-heading"; // Assign a unique id
+    newDragTextHeading.textContent = "Drag and drop your files here";
+    newDragTextHeading.id = "drag-text-heading"; // Assign a unique id
 
     const newDragTextInfo = document.createElement("p");
-    newDragTextInfo.textContent = "New Drag Text Info";
-    newDragTextInfo.id = "new-drag-text-info"; // Assign a unique id
+    newDragTextInfo.textContent =
+      "Supported Formats: PDF, Doc, Image Size: up to 10MB";
+    newDragTextInfo.id = "drag-text-info"; // Assign a unique id
 
     // Replace the removed elements with the new elements
     dragTextHeading.replaceWith(newDragTextHeading);
