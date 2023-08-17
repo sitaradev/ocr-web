@@ -14,6 +14,7 @@ const dropArea = document.querySelector(".modal-content"),
 // var dropArea = document.querySelector(".modal-content");
 var labelText = null;
 let inputElement = document.getElementById("input-url");
+var previousFile; // To store the previously selected file
 
 let file; //this is a global variable and we'll use it inside multiple functions
 let img_url = null;
@@ -22,25 +23,50 @@ button.onclick = () => {
 };
 
 input.addEventListener("change", function () {
-  console.log("img-upload");
-  file = this.files[0];
-  if (file) {
-    // Process the file upload here
-    flag = true;
-    dropArea.classList.add("active");
-    showFile();
-  }
-});
+  if (!this.files[0] && previousFile) {
+    flag = false; // Use the previousFile if no new file is selected
+    file = previousFile;
+    console.log("its close");
+    // Create new elements with unique id attributes
+    const newDragTextHeading = document.createElement("h2");
+    newDragTextHeading.textContent = "Drag and drop your files here";
+    newDragTextHeading.id = "drag-text-heading"; // Assign a unique id
 
-inputElement.addEventListener("input", function () {
-  img_url = inputElement.value; // Store the URL string
-  console.log("img_url - ", img_url);
+    const newDragTextInfo = document.createElement("p");
+    newDragTextInfo.textContent =
+      "Supported Formats: PDF, Doc, Image Size: up to 10MB";
+    newDragTextInfo.id = "drag-text-info"; // Assign a unique id
 
-  if (img_url) {
-    flag = true;
-    // Process the URL input here
-    dropArea.classList.add("active");
-    showFile();
+    const imgElement = document.querySelector(".show-img-preview");
+    imgElement.src = "";
+    imgElement.src = "./images/documents.png";
+    // Remove the duplicated id attributes from the <h2> and <p> elements
+    const dragTextHeading = document.getElementById("drag-text-heading");
+    const dragTextInfo = document.getElementById("drag-text-info");
+    // Replace the removed elements with the new elements
+    dragTextHeading.replaceWith(newDragTextHeading);
+    dragTextInfo.replaceWith(newDragTextInfo);
+  } else {
+    // console.log("img-upload");
+    file = this.files[0];
+    if (file) {
+      console.log("cdhshshdd");
+
+      // Update the previousFile if a new file is selected
+      previousFile = file;
+    }
+
+    console.log("previousFile", previousFile);
+
+    if (file) {
+      console.log("file inside chnage", file);
+
+      console.log("cddd");
+      // Process the file upload here
+      flag = true;
+      dropArea.classList.add("active");
+      showFile();
+    }
   }
 });
 
@@ -123,7 +149,7 @@ function showFile() {
     }
   }
 }
-
+console.log("file-img", file);
 function loader() {
   event.preventDefault();
   console.log("labelText", labelText);
@@ -143,6 +169,7 @@ function loader() {
     console.log("url_flag", url_flag);
     // Get the value of the selected radio button
     const selectedApi = labelText;
+    console.log("selectedApi", selectedApi);
     // Send the selected API value as a hidden input field in the form
     const selectedApiInput = document.createElement("input");
     selectedApiInput.type = "hidden";

@@ -440,17 +440,31 @@ body {
   justify-content: center;
 }
 .upload-type {
-  /* background-color: green; */
-  height: 100%;
+  height: auto;
   width: 60%;
+  /* overflow: scroll; */
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center horizontally */
+  align-items: center;
   gap: 1%;
   margin-bottom: 2%;
+  background-color: #f4fbfe;
+  /* background-color: red; */
   margin-top: 2%;
 }
 
+.upload-type::-webkit-scrollbar {
+  width: 0.5em; /* Width of the vertical scrollbar */
+}
+
+.upload-type::-webkit-scrollbar-track {
+  background: transparent; /* Background of the track */
+}
+
+.upload-type::-webkit-scrollbar-thumb {
+  background-color: transparent; /* Color of the scrollbar thumb */
+  border-radius: 0; /* Radius of the thumb */
+}
 .upload-inner {
   width: 100%;
   display: flex;
