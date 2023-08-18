@@ -15,9 +15,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 var Tesseract = require("tesseract.js");
 app.use(express.static("public"));
-const mindeeClient = new mindee.Client({
-  apiKey: "ce5af6b2fba058822463fcd724f081cb",
-});
+
+// all different api keys----
+const ALL_KEYS = {
+  Invoice: "2432938b71cfd0972ff6f0babc44e188",
+  Receipt: "6c72791fa85f9950126506799f0cc936",
+  Passport: "6c72791fa85f9950126506799f0cc936",
+  USBankCheck: "2432938b71cfd0972ff6f0babc44e188",
+  LicensePlates: "91f43c857ac89a01ba4da044f4924ac8",
+};
 
 function getFilePath(path) {
   var newId = uuidv4();
@@ -41,6 +47,7 @@ var upload = multer({
   storage: Storage,
 }).single("image");
 
+var extractedData;
 app.post("/upload", async (req, res) => {
   try {
     upload(req, res, async (err) => {
@@ -48,7 +55,6 @@ app.post("/upload", async (req, res) => {
         console.error("Error during upload:", err);
         return res.send("Something went wrong");
       }
-      console.log("else inside upload");
       var image = fs.readFileSync(__dirname + "/images/" + filePath, {
         encoding: null,
       });
@@ -68,35 +74,76 @@ app.post("/upload", async (req, res) => {
       try {
         switch (selectedApi) {
           case "Invoice":
-            // Call the Mindee API for Invoice
-            doc = mindeeClient.docFromPath(__dirname + "/images/" + filePath);
+            console.log("Invoice");
+
+            const invoiceClient = new mindee.Client({
+              apiKey: ALL_KEYS.Invoice,
+            });
+            doc = invoiceClient.docFromPath(__dirname + "/images/" + filePath);
             var resp = await doc.parse(mindee.InvoiceV4);
             console.log("resp of invoice", resp);
             break;
 
           case "Receipt":
-            // Call the Mindee API for Receipt
-            doc = mindeeClient.docFromPath(__dirname + "/images/" + filePath);
-            var resp = await doc.parse(mindee.ReceiptV3);
+            console.log("Receipt");
+            const receiptClient = new mindee.Client({
+              apiKey: ALL_KEYS.Invoice,
+            });
+            doc = receiptClient.docFromPath(__dirname + "/images/" + filePath);
+            var resp = await doc.parse(mindee.InvoiceV4);
+            console.log("resp of receipt", resp);
             break;
 
           case "Passport":
+            console.log("Passport");
+
             // Call the Mindee API for Passport
-            doc = mindeeClient.docFromPath(__dirname + "/images/" + filePath);
-            var resp = await doc.parse(mindee.PassportV1);
-            break;
+            const passportClient = new mindee.Client({
+              apiKey: ALL_KEYS.Invoice,
+            });
+            doc = passportClient.docFromPath(__dirname + "/images/" + filePath);
+            var resp = await doc.parse(mindee.InvoiceV4);
+            console.log("resp of Passport", resp);
 
           case "US Bank Check":
+            console.log("US Bank Check");
+
             // Call the Mindee API for US Bank Check (replace mindee with appropriate module)
-            doc = mindeeClient.docFromPath(__dirname + "/images/" + filePath);
-            var resp = await doc.parse(mindeeModule); // replace mindeeModule
-            break;
+            const usBankClient = new mindee.Client({
+              apiKey: ALL_KEYS.Invoice,
+            });
+            doc = usBankClient.docFromPath(__dirname + "/images/" + filePath);
+            var resp = await doc.parse(mindee.InvoiceV4);
+            console.log("resp of us bank", resp);
 
           case "License Plates":
             // Call the Mindee API for License Plates (replace mindee with appropriate module)
-            doc = mindeeClient.docFromPath(__dirname + "/images/" + filePath);
-            var resp = await doc.parse(mindeeModule); // replace mindeeModule
-            break;
+            const licensePlateClient = new mindee.Client({
+              apiKey: ALL_KEYS.Invoice,
+            });
+            doc = licensePlateClient.docFromPath(
+              __dirname + "/images/" + filePath
+            );
+            var resp = await doc.parse(mindee.InvoiceV4); //  License Plates not avalaible
+            console.log("resp of receipt", resp);
+
+          case "Video":
+            // Call the Mindee API for License Plates (replace mindee with appropriate module)
+            const videoClient = new mindee.Client({
+              apiKey: ALL_KEYS.Invoice,
+            });
+            doc = videoClient.docFromPath(__dirname + "/images/" + filePath);
+            var resp = await doc.parse(mindee.InvoiceV4); //  License Plates not avalaible
+            console.log("resp of receipt", resp);
+
+          case "License plates":
+            // Call the Mindee API for License Plates (replace mindee with appropriate module)
+            const LicenseClient = new mindee.Client({
+              apiKey: ALL_KEYS.Invoice,
+            });
+            doc = LicenseClient.docFromPath(__dirname + "/images/" + filePath);
+            var resp = await doc.parse(mindee.InvoiceV4); //  License Plates not avalaible
+            console.log("resp of receipt", resp);
 
           default:
             console.log("Unknown selected API:", selectedApi);
@@ -123,6 +170,39 @@ app.post("/upload", async (req, res) => {
 });
 
 app.get("/showdata", async (req, res) => {
+  console.log("extractedData", extractedData);
+  if (extractedData === undefined) {
+    return;
+  }
+  if (!result) {
+    res.redirect("/");
+  }
+
+  await fsExtra.emptyDirSync(directory);
+
+  // Process the extracted data to remove headers, patterns, and tables
+  const textOnly = extractedData
+    .replace(/[^a-zA-Z0-9\s\n]/g, "") // Remove non-alphanumeric characters
+    .replace(/\n\s*\n/g, "\n") // Remove empty lines
+    .trim(); // Trim leading and trailing spaces
+
+  res.render("success.ejs", { text: result, extractedData: textOnly });
+});
+
+app.get("/", (req, res) => {
+  console.log();
+  res.render("index.ejs");
+});
+
+app.listen(process.env.PORT, () => {
+  console.log(`Server started ${process.env.PORT}`);
+});
+
+app.get("/result", async (req, res) => {
+  console.log("extractedData", extractedData);
+  if (extractedData === undefined) {
+    return;
+  }
   if (!result) {
     res.redirect("/");
   }
@@ -136,13 +216,4 @@ app.get("/showdata", async (req, res) => {
     .trim(); // Trim leading and trailing spaces
 
   res.render("result.ejs", { text: result, extractedData: textOnly });
-});
-
-app.get("/", (req, res) => {
-  console.log();
-  res.render("index.ejs");
-});
-
-app.listen(process.env.PORT, () => {
-  console.log(`Server started ${process.env.PORT}`);
 });

@@ -1,10 +1,20 @@
 //selecting all required elements
-var flag = false;
+flag = false;
 const dropArea = document.querySelector(".modal-content"),
   dragText = dropArea.querySelector("header"),
   button = dropArea.querySelector(".browse"),
   input = dropArea.querySelector("input");
+// Selecting all required elements
+// var flag = false;
+// var url_flag = false;
+// var dragTextHeading = document.getElementById("drag-text-heading");
+// var dragTextInfo = document.getElementById("drag-text-info");
+// var inputElement = document.getElementById("input-url");
+// var imgElement = document.querySelector(".show-img-preview");
+// var dropArea = document.querySelector(".modal-content");
+var labelText = null;
 let inputElement = document.getElementById("input-url");
+var previousFile; // To store the previously selected file
 
 let file; //this is a global variable and we'll use it inside multiple functions
 let img_url = null;
@@ -13,26 +23,50 @@ button.onclick = () => {
 };
 
 input.addEventListener("change", function () {
-  console.log("img-upload");
-  file = this.files[0];
-  if (file) {
-    // Process the file upload here
-    flag = true;
-    dropArea.classList.add("active");
-    showFile();
-    console.log("file", file);
-  }
-});
+  if (!this.files[0] && previousFile) {
+    flag = false; // Use the previousFile if no new file is selected
+    file = previousFile;
+    console.log("its close");
+    // Create new elements with unique id attributes
+    const newDragTextHeading = document.createElement("h2");
+    newDragTextHeading.textContent = "Drag and drop your files here";
+    newDragTextHeading.id = "drag-text-heading"; // Assign a unique id
 
-inputElement.addEventListener("input", function () {
-  img_url = inputElement.value; // Store the URL string
-  console.log("img_url - ", img_url);
+    const newDragTextInfo = document.createElement("p");
+    newDragTextInfo.textContent =
+      "Supported Formats: PDF, Doc, Image Size: up to 10MB";
+    newDragTextInfo.id = "drag-text-info"; // Assign a unique id
 
-  if (img_url) {
-    flag = true;
-    // Process the URL input here
-    dropArea.classList.add("active");
-    showFile();
+    const imgElement = document.querySelector(".show-img-preview");
+    imgElement.src = "";
+    imgElement.src = "./images/documents.png";
+    // Remove the duplicated id attributes from the <h2> and <p> elements
+    const dragTextHeading = document.getElementById("drag-text-heading");
+    const dragTextInfo = document.getElementById("drag-text-info");
+    // Replace the removed elements with the new elements
+    dragTextHeading.replaceWith(newDragTextHeading);
+    dragTextInfo.replaceWith(newDragTextInfo);
+  } else {
+    // console.log("img-upload");
+    file = this.files[0];
+    if (file) {
+      console.log("cdhshshdd");
+
+      // Update the previousFile if a new file is selected
+      previousFile = file;
+    }
+
+    console.log("previousFile", previousFile);
+
+    if (file) {
+      console.log("file inside chnage", file);
+
+      console.log("cddd");
+      // Process the file upload here
+      flag = true;
+      dropArea.classList.add("active");
+      showFile();
+    }
   }
 });
 
@@ -78,9 +112,8 @@ function showFile() {
     const dragTextHeading = document.getElementById("drag-text-heading");
     const dragTextInfo = document.getElementById("drag-text-info");
 
-    dragTextHeading.remove();
-    dragTextInfo.remove();
-    console.log("img url in show file", img_url);
+    dragTextHeading.innerHTML = "";
+    dragTextInfo.innerHTML = "";
   } else {
     let fileType = file.type; //getting selected file type
     let validExtensions = ["image/jpeg", "image/jpg", "image/png"]; //adding some valid image extensions in array
@@ -100,42 +133,43 @@ function showFile() {
         const dragTextHeading = document.getElementById("drag-text-heading");
         const dragTextInfo = document.getElementById("drag-text-info");
 
-        dragTextHeading.remove();
-        dragTextInfo.remove();
+        dragTextHeading.innerHTML = "";
+        dragTextInfo.innerHTML = "";
       };
 
       fileReader.readAsDataURL(file);
     } else {
-      // alert("This is not an Image File!");
-
       const snackbar = document.getElementById("snackbar");
       snackbar.textContent =
         "This is not an Image File! please choose a valid image only";
       snackbar.className = "show";
-
+      flag = false;
       dropArea.classList.remove("active");
-      dragText.textContent = "Drag & Drop to Upload File";
+      // dragText.textContent = "Drag & Drop to Upload ";
     }
   }
 }
-
+console.log("file-img", file);
 function loader() {
   event.preventDefault();
   console.log("labelText", labelText);
 
-  const selectedRadio = document.querySelector(
-    'input[name="document"]:checked'
-  );
+  // const selectedRadio = document.querySelector(
+  //   'input[name="document"]:checked'
+  // );
 
-  // const dropArea = document.querySelector(".modal-content");
-  const imageInput = document.querySelector('input[name="image"]');
-  const flag = imageInput.files.length > 0;
+  // // const dropArea = document.querySelector(".modal-content");
+  // const imageInput = document.querySelector('input[name="image"]');
+  // const flag = imageInput.files.length > 0;
   const url_flag = img_url !== null;
 
   // alert(selectedRadio.innerHTML);
-  if (flag || (url_flag && labelText)) {
+  if (flag !== false && labelText) {
+    console.log("flag", flag);
+    console.log("url_flag", url_flag);
     // Get the value of the selected radio button
     const selectedApi = labelText;
+    console.log("selectedApi", selectedApi);
     // Send the selected API value as a hidden input field in the form
     const selectedApiInput = document.createElement("input");
     selectedApiInput.type = "hidden";
@@ -152,6 +186,9 @@ function loader() {
     // spinner.classList.add("spinner");
     // dropArea.appendChild(spinner);
   } else if (!flag || !url_flag) {
+    console.log("flag", flag);
+    console.log("url_flag", url_flag);
+
     // Handle image not uploaded scenario
     console.log("Please upload an image");
 
@@ -212,13 +249,54 @@ function scrollToDiv(divId) {
 function openPopup() {
   const modal = document.getElementById("popupModal");
   modal.style.display = "block";
+
+  // imgElement.src = img_url;
 }
 
+// Close the popup modal
 function closePopup() {
+  console.log("flag in poppclose", flag);
+
+  flag = false;
+  url_flag = false;
+  file = null;
+  img_url = null;
+  console.log("closePopup clicked");
+  console.log("flag in poppclose", flag);
+
+  // Remove the duplicated id attributes from the <h2> and <p> elements
+  const dragTextHeading = document.getElementById("drag-text-heading");
+  const dragTextInfo = document.getElementById("drag-text-info");
+
+  console.log("dragTextHeading", dragTextHeading);
+  console.log("dragTextInfo", dragTextInfo);
+
+  //  dragTextHeading.remove();
+  //  dragTextInfo.remove();
+
+  // Hide the modal
   const modal = document.getElementById("popupModal");
   modal.style.display = "none";
-}
 
+  const imgElement = document.querySelector(".show-img-preview");
+  imgElement.src = "./images/documents.png";
+
+  if (dragTextHeading && dragTextInfo) {
+    // Create new elements with unique id attributes
+    const newDragTextHeading = document.createElement("h2");
+    newDragTextHeading.textContent = "Drag and drop your files here";
+    newDragTextHeading.id = "drag-text-heading"; // Assign a unique id
+
+    const newDragTextInfo = document.createElement("p");
+    newDragTextInfo.textContent =
+      "Supported Formats: PDF, Doc, Image Size: up to 10MB";
+    newDragTextInfo.id = "drag-text-info"; // Assign a unique id
+
+    // Replace the removed elements with the new elements
+    dragTextHeading.replaceWith(newDragTextHeading);
+    dragTextInfo.replaceWith(newDragTextInfo);
+  }
+}
 // Attach the openPopup function to the button's click event
 const openBtn = document.getElementById("openPopupBtn");
 // openBtn.addEventListener("click", openPopup);
@@ -226,11 +304,3 @@ const openBtn = document.getElementById("openPopupBtn");
 // Attach the closePopup function to the close button's click event
 const closeBtn = document.getElementById("closePopupBtn");
 closeBtn.addEventListener("click", closePopup);
-
-// Attach the closePopup function to the window's click event
-window.addEventListener("click", (event) => {
-  const modal = document.getElementById("popupModal");
-  if (event.target == modal) {
-    closePopup();
-  }
-});
