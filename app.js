@@ -1,15 +1,15 @@
 const express = require("express");
 const app = express();
-const fsPromises = require("fs").promises;
-require("dotenv").config();
-var result;
-const directory = "images/";
-const { v4: uuidv4 } = require("uuid");
-const fsExtra = require("fs-extra");
-const multer = require("multer");
-const fs = require("fs");
-const mindee = require("mindee");
-const bodyParser = require("body-parser");
+// const fsPromises = require("fs").promises;
+// require("dotenv").config();
+// var result;
+// const directory = "images/";
+// const { v4: uuidv4 } = require("uuid");
+// const fsExtra = require("fs-extra");
+// const multer = require("multer");
+// const fs = require("fs");
+// const mindee = require("mindee");
+// const bodyParser = require("body-parser");
 
 // app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -189,14 +189,24 @@ const bodyParser = require("body-parser");
 //   res.render("success.ejs", { text: result, extractedData: textOnly });
 // });
 
+// app.get("/", (req, res) => {
+//   console.log();
+//   res.send("Hello")
+//   // res.render("index.ejs");
+// });
+
+// app.listen(5000, () => {
+//   console.log(`Server started`);
+// });
+
+// Create GET request
 app.get("/", (req, res) => {
-  console.log();
-  res.send("Hello")
-  // res.render("index.ejs");
+  res.send("Express on Vercel");
 });
 
+// Initialize server
 app.listen(5000, () => {
-  console.log(`Server started`);
+  console.log("Running on port 5000.");
 });
 
 // app.get("/result", async (req, res) => {
