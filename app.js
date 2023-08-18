@@ -194,7 +194,7 @@ app.get("/", (req, res) => {
   res.render("index.ejs");
 });
 
-app.listen(process.env.PORT, () => {
+app.listen(8000, () => {
   console.log(`Server started ${process.env.PORT}`);
 });
 
