@@ -1,10 +1,11 @@
 {
-   "version": 2,
-   "name": "ocr-web",
-   "builds": [
-      { "src": "app.js", "use": "@vercel/node" }
-   ],
-   "routes": [
-      { "src": "/(.*)", "dest": "/app.js" }
-   ]
+  "version": 2,
+  "builds": [
+    {
+      // Specify file to convert to a serverless function
+      "src": "app.js",
+      // Specify the NPM module that is used for the build
+      "use": "@now/node"
+    }
+  ]
 }
