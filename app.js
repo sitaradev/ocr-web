@@ -198,6 +198,8 @@ app.listen(8000, () => {
   console.log(`Server started ${process.env.PORT}`);
 });
 
+app.get('/favicon.ico', (req, res) => res.status(204));
+
 app.get("/result", async (req, res) => {
   console.log("extractedData", extractedData);
   if (extractedData === undefined) {
