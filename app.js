@@ -189,20 +189,16 @@ const app = express();
 //   res.render("success.ejs", { text: result, extractedData: textOnly });
 // });
 
-// app.get("/", (req, res) => {
-//   console.log();
-//   res.send("Hello")
-//   // res.render("index.ejs");
-// });
+app.get("/", (req, res) => {
+  console.log();
+  res.send("Hello")
+  // res.render("index.ejs");
+});
 
 // app.listen(5000, () => {
 //   console.log(`Server started`);
 // });
 
-// Create GET request
-app.get("/", (req, res) => {
-  res.send("Express on Vercel");
-});
 
 // Initialize server
 app.listen(5000, () => {
