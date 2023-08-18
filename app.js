@@ -191,7 +191,8 @@ app.get("/showdata", async (req, res) => {
 
 app.get("/", (req, res) => {
   console.log();
-  res.render("index.ejs");
+  res.send("Hello")
+  // res.render("index.ejs");
 });
 
 app.listen(8000, () => {
