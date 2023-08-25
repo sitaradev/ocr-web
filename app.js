@@ -12,7 +12,7 @@ const bodyParser = require("body-parser");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var Tesseract = require("tesseract.js");
+//var Tesseract = require("tesseract.js");
 // app.use(express.static("public"));
 
 // // all different api keys----
