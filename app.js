@@ -189,7 +189,7 @@ app.get("/showdata", async (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  res.render("views/index.ejs");
+  res.render("index.ejs");
 });
 
 // app.listen(5000, () => {
