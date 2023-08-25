@@ -7,7 +7,7 @@ const app = express();
 // const fsExtra = require("fs-extra");
 // const multer = require("multer");
 // const fs = require("fs");
-const mindee = require("mindee");
+// const mindee = require("mindee");
 const bodyParser = require("body-parser");
 
 // app.use(bodyParser.urlencoded({ extended: true }));
