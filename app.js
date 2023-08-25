@@ -1,14 +1,14 @@
 const express = require("express");
 const app = express();
 // const fsPromises = require("fs").promises;
-// var result;
-// const directory = "images/";
-// const { v4: uuidv4 } = require("uuid");
-// const fsExtra = require("fs-extra");
-// const multer = require("multer");
-// const fs = require("fs");
-// const mindee = require("mindee");
-// const bodyParser = require("body-parser");
+var result;
+const directory = "images/";
+const { v4: uuidv4 } = require("uuid");
+const fsExtra = require("fs-extra");
+const multer = require("multer");
+const fs = require("fs");
+const mindee = require("mindee");
+const bodyParser = require("body-parser");
 
 // app.use(bodyParser.urlencoded({ extended: true }));
 
