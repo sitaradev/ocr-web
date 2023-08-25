@@ -10,43 +10,43 @@ const fs = require("fs");
 // const mindee = require("mindee");
 const bodyParser = require("body-parser");
 
-// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
-//var Tesseract = require("tesseract.js");
-// app.use(express.static("public"));
+var Tesseract = require("tesseract.js");
+app.use(express.static("public"));
 
-// // all different api keys----
-// const ALL_KEYS = {
-//   Invoice: "2432938b71cfd0972ff6f0babc44e188",
-//   Receipt: "6c72791fa85f9950126506799f0cc936",
-//   Passport: "6c72791fa85f9950126506799f0cc936",
-//   USBankCheck: "2432938b71cfd0972ff6f0babc44e188",
-//   LicensePlates: "91f43c857ac89a01ba4da044f4924ac8",
-// };
+// all different api keys----
+const ALL_KEYS = {
+  Invoice: "2432938b71cfd0972ff6f0babc44e188",
+  Receipt: "6c72791fa85f9950126506799f0cc936",
+  Passport: "6c72791fa85f9950126506799f0cc936",
+  USBankCheck: "2432938b71cfd0972ff6f0babc44e188",
+  LicensePlates: "91f43c857ac89a01ba4da044f4924ac8",
+};
 
-// function getFilePath(path) {
-//   var newId = uuidv4();
-//   newId = newId.substring(0, 13);
-//   var filePath = newId + "-" + path;
-//   return filePath;
-// }
+function getFilePath(path) {
+  var newId = uuidv4();
+  newId = newId.substring(0, 13);
+  var filePath = newId + "-" + path;
+  return filePath;
+}
 
-// var filePath;
-// var Storage = multer.diskStorage({
-//   destination: (req, file, callback) => {
-//     callback(null, __dirname + "/images");
-//   },
-//   filename: (req, file, callback) => {
-//     filePath = getFilePath(file.originalname);
-//     callback(null, filePath);
-//   },
-// });
+var filePath;
+var Storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, __dirname + "/images");
+  },
+  filename: (req, file, callback) => {
+    filePath = getFilePath(file.originalname);
+    callback(null, filePath);
+  },
+});
 
-// var upload = multer({
-//   storage: Storage,
-// }).single("image");
+var upload = multer({
+  storage: Storage,
+}).single("image");
 
-// var extractedData;
+var extractedData;
 // app.post("/upload", async (req, res) => {
 //   try {
 //     upload(req, res, async (err) => {
@@ -168,30 +168,28 @@ const bodyParser = require("body-parser");
 //   }
 // });
 
-// app.get("/showdata", async (req, res) => {
-//   console.log("extractedData", extractedData);
-//   if (extractedData === undefined) {
-//     return;
-//   }
-//   if (!result) {
-//     res.redirect("/");
-//   }
+app.get("/showdata", async (req, res) => {
+  console.log("extractedData", extractedData);
+  if (extractedData === undefined) {
+    return;
+  }
+  if (!result) {
+    res.redirect("/");
+  }
 
-//   await fsExtra.emptyDirSync(directory);
+  await fsExtra.emptyDirSync(directory);
 
-//   // Process the extracted data to remove headers, patterns, and tables
-//   const textOnly = extractedData
-//     .replace(/[^a-zA-Z0-9\s\n]/g, "") // Remove non-alphanumeric characters
-//     .replace(/\n\s*\n/g, "\n") // Remove empty lines
-//     .trim(); // Trim leading and trailing spaces
+  // Process the extracted data to remove headers, patterns, and tables
+  const textOnly = extractedData
+    .replace(/[^a-zA-Z0-9\s\n]/g, "") // Remove non-alphanumeric characters
+    .replace(/\n\s*\n/g, "\n") // Remove empty lines
+    .trim(); // Trim leading and trailing spaces
 
-//   res.render("success.ejs", { text: result, extractedData: textOnly });
-// });
+  res.render("success.ejs", { text: result, extractedData: textOnly });
+});
 
 app.get("/", (req, res) => {
-  console.log();
-  res.send("Hello")
-  // res.render("index.ejs");
+  res.render("index.ejs");
 });
 
 // app.listen(5000, () => {
