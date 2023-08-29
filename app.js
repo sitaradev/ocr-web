@@ -153,7 +153,7 @@ app.post("/upload", async (req, res) => {
         // Process the extracted data to remove colon-separated lines at the beginning of each section
         extractedData = extractedData.replace(/:\s*[\s\S]*?(?=(\n|$))/g, "");
         result = extractedData
-        res.redirect("/showdata");
+        res.redirect("/result");
         return
       } catch (mindeeError) {
         console.error("Mindee API error:", mindeeError);
@@ -200,22 +200,22 @@ app.listen(5000, () => {
   console.log("Running on port 5000.");
 });
 
-// app.get("/result", async (req, res) => {
-//   console.log("extractedData", extractedData);
-//   if (extractedData === undefined) {
-//     return;
-//   }
-//   if (!result) {
-//     res.redirect("/");
-//   }
+app.get("/result", async (req, res) => {
+  console.log("extractedData", extractedData);
+  if (extractedData === undefined) {
+    return;
+  }
+  if (!result) {
+    res.redirect("/");
+  }
 
-//   await fsExtra.emptyDirSync(directory);
+  await fsExtra.emptyDirSync(directory);
 
-//   // Process the extracted data to remove headers, patterns, and tables
-//   const textOnly = extractedData
-//     .replace(/[^a-zA-Z0-9\s\n]/g, "") // Remove non-alphanumeric characters
-//     .replace(/\n\s*\n/g, "\n") // Remove empty lines
-//     .trim(); // Trim leading and trailing spaces
+  // Process the extracted data to remove headers, patterns, and tables
+  const textOnly = extractedData
+    .replace(/[^a-zA-Z0-9\s\n]/g, "") // Remove non-alphanumeric characters
+    .replace(/\n\s*\n/g, "\n") // Remove empty lines
+    .trim(); // Trim leading and trailing spaces
 
-//   res.render("result.ejs", { text: result, extractedData: textOnly });
-// });
+  res.render("result.ejs", { text: result, extractedData: textOnly });
+});
