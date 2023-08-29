@@ -7,7 +7,6 @@ const { v4: uuidv4 } = require("uuid");
 const fsExtra = require("fs-extra");
 const multer = require("multer");
 const fs = require("fs");
-// const mindee = require("mindee");
 const bodyParser = require("body-parser");
 const path = require("path");
 console.log("hello")
@@ -55,6 +54,7 @@ var upload = multer({
 var extractedData;
 app.post("/upload", async (req, res) => {
   try {
+    const mindee = require("mindee");
     upload(req, res, async (err) => {
       if (err) {
         console.error("Error during upload:", err);
