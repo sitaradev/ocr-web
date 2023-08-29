@@ -19,7 +19,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static("public"));
 
-all different api keys----
 const ALL_KEYS = {
   Invoice: "d895b172b16a6714ddc7bb22f26139b2",
   Receipt: "6c72791fa85f9950126506799f0cc936",
@@ -180,8 +179,7 @@ app.get("/showdata", async (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  res.send("Hello")
-  // res.render("index.ejs");
+  res.render("index.ejs");
 });
 
 // Initialize server
