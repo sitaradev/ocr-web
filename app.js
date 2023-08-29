@@ -7,7 +7,7 @@ const { v4: uuidv4 } = require("uuid");
 const fsExtra = require("fs-extra");
 const multer = require("multer");
 const fs = require("fs");
-// const mindee = require("mindee");
+const mindee = require("mindee");
 const bodyParser = require("body-parser");
 const path = require("path");
 console.log("hello")
