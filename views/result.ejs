@@ -30,13 +30,14 @@
           </h2>
         </div>
         <div class="heading_btns">
-          <button id="save_drive">Save to Google Drive</button>
-          <select name="language" id="dropdown">
+          <!-- <button id="save_drive">Save to Google Drive</button> -->
+          <!-- <select name="language" id="dropdown">
             <option value="PDF">Download</option>
             <option value="PDF">PDF</option>
             <option value="XL">XL</option>
             <option value="Text File" id="download_now">Text File</option>
-          </select>
+          </select> -->
+          <button id="download_now">Download as File</button>
         </div>
       </div>
       <div class="result-data">
@@ -53,6 +54,15 @@
     // for downloading in .txt formal from dropdown menu---
     const dropdown = document.getElementById("dropdown");
     const downloadLink = document.getElementById("download_link");
+    const downloadBtn = document.getElementById("download_now");
+    
+
+    downloadBtn.onclick = () => {
+      var text = `<%= text %>`;
+      download(text, "result.txt", "text/plain");
+      console.log("selcted .txt");
+      downloadLink.style.display = "block"; // Show the download link
+    }
 
     dropdown.addEventListener("change", function () {
       if (dropdown.value === "Text File") {

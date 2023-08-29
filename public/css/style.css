@@ -112,7 +112,7 @@ body {
   text-align: center;
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
-  z-index: 9999;
+  z-index: 999999;
 }
 #spinner-body > h2 {
   color: #0b38b6;
@@ -560,7 +560,8 @@ body {
 }
 
 /* Style for the modal */
-.modal {
+.modal,
+.selectAreaModal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   left: 0;
@@ -670,7 +671,7 @@ body {
   height: 60px;
 }
 /* only for preview img */
-.show-img-preview {
+.show_img_preview {
   padding: 5px;
   max-width: 200px;
   max-height: 140px;
@@ -834,6 +835,18 @@ body {
   border-radius: 6px;
   opacity: 1;
 }
+.heading_btns > #dropdown {
+  width: 147px;
+  height: 57px;
+  font-size: 16px;
+  padding: 10px;
+  background-color: #00121a;
+  color: white;
+  cursor: pointer;
+  /* UI Properties */
+  border-radius: 6px;
+  opacity: 1;
+}
 .result-data {
   padding: 10px;
   max-height: 70vh;
@@ -861,4 +874,118 @@ body {
   letter-spacing: 1px;
   float: right;
   cursor: pointer;
+}
+
+/* cropper only "main_cropper */
+/* .main_cropper {
+  background-color: #00121a;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+}
+.select_img {
+  background-color: rgb(141, 54, 54);
+  border-radius: 10px;
+  padding: 10px;
+  height: 90%;
+} */
+
+/*  css for selectAreaModal */
+
+.selectAreaModal {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: transparent;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 5555;
+}
+
+.selectAreaModalInner {
+  width: 80%;
+  height: 90%;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 10px;
+  border: 2px solid rgb(220, 220, 220);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+.selectAreaChildInner {
+  /* background-color: #0b38b6; */
+  padding: 5px;
+  width: 80%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 1%;
+  justify-content: center;
+  align-items: center;
+}
+.selectAreaModalInner > h2 {
+  color: rgb(0, 0, 0);
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  margin-bottom: 2%;
+}
+.selectAreaChildInnerPreview {
+  width: 90%;
+  height: 20%;
+  /* border: 1px solid gray; */
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.selectAreaChildInner > img {
+  width: 80%;
+  height: 80%;
+  /* object-fit: contain; */
+  border: 1px solid rgb(224, 219, 219);
+  border-radius: 20px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+.selectAreaChildInner > button {
+  color: white;
+  background-color: black;
+  width: 160px;
+  height: 50px;
+  font-size: 18px;
+  padding: 10px;
+  font-weight: 400;
+  border-radius: 10px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+canvas {
+  /* border: 1px solid blue; */
+}
+
+#selected_imgPreview_Div {
+  background-color: red;
+  border: 1xp solid green;
+  /* margin: 10px; */
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  padding: 5px;
+  /* padding: 10px; */
 }
