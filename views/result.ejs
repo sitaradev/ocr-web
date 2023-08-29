@@ -31,9 +31,12 @@
         </div>
         <div class="heading_btns">
           <button id="save_drive">Save to Google Drive</button>
-          <button id="download_now" class="btn">
-            Download <span> <img src="images/arrow-down.svg" alt="" /> </span>
-          </button>
+          <select name="language" id="dropdown">
+            <option value="PDF">Download</option>
+            <option value="PDF">PDF</option>
+            <option value="XL">XL</option>
+            <option value="Text File" id="download_now">Text File</option>
+          </select>
         </div>
       </div>
       <div class="result-data">
@@ -47,9 +50,19 @@
     </div>
   </body>
   <script>
-    document.querySelector("#download_now").addEventListener("click", () => {
-      var text = `<%= text %>`;
-      download(text, "result.txt", "text/plain");
+    // for downloading in .txt formal from dropdown menu---
+    const dropdown = document.getElementById("dropdown");
+    const downloadLink = document.getElementById("download_link");
+
+    dropdown.addEventListener("change", function () {
+      if (dropdown.value === "Text File") {
+        var text = `<%= text %>`;
+        download(text, "result.txt", "text/plain");
+        console.log("selcted .txt");
+        downloadLink.style.display = "block"; // Show the download link
+      } else {
+        downloadLink.style.display = "none"; // Hide the download link
+      }
     });
 
     // var buttons = document.getElementsByTagName("button");
