@@ -53,126 +53,118 @@ var upload = multer({
 }).single("image");
 
 var extractedData;
-// app.post("/upload", async (req, res) => {
-//   try {
-//     upload(req, res, async (err) => {
-//       if (err) {
-//         console.error("Error during upload:", err);
-//         return res.send("Something went wrong");
-//       }
-//       var image = fs.readFileSync(__dirname + "/images/" + filePath, {
-//         encoding: null,
-//       });
+app.post("/upload", async (req, res) => {
+  try {
+    upload(req, res, async (err) => {
+      if (err) {
+        console.error("Error during upload:", err);
+        return res.send("Something went wrong");
+      }
+      var image = fs.readFileSync(__dirname + "/images/" + filePath, {
+        encoding: null,
+      });
 
-//       // Assuming this part was missing in the previous snippet
-//       try {
-//         const {
-//           data: { text },
-//         } = await Tesseract.recognize(image, "eng");
-//         result = text;
-//       } catch (tesseractError) {}
+      // Retrieve the selected API value from the form
+      const selectedApi = req.body.selectedApi;
 
-//       // Retrieve the selected API value from the form
-//       const selectedApi = req.body.selectedApi;
+      var doc;
+      try {
+        switch (selectedApi) {
+          case "Invoice":
+            console.log("Invoice");
 
-//       var doc;
-//       try {
-//         switch (selectedApi) {
-//           case "Invoice":
-//             console.log("Invoice");
+            const invoiceClient = new mindee.Client({
+              apiKey: ALL_KEYS.Invoice,
+            });
+            doc = invoiceClient.docFromPath(__dirname + "/images/" + filePath);
+            var resp = await doc.parse(mindee.InvoiceV4);
+            console.log("resp of invoice", resp);
+            break;
 
-//             const invoiceClient = new mindee.Client({
-//               apiKey: ALL_KEYS.Invoice,
-//             });
-//             doc = invoiceClient.docFromPath(__dirname + "/images/" + filePath);
-//             var resp = await doc.parse(mindee.InvoiceV4);
-//             console.log("resp of invoice", resp);
-//             break;
+          case "Receipt":
+            console.log("Receipt");
+            const receiptClient = new mindee.Client({
+              apiKey: ALL_KEYS.Invoice,
+            });
+            doc = receiptClient.docFromPath(__dirname + "/images/" + filePath);
+            var resp = await doc.parse(mindee.InvoiceV4);
+            console.log("resp of receipt", resp);
+            break;
 
-//           case "Receipt":
-//             console.log("Receipt");
-//             const receiptClient = new mindee.Client({
-//               apiKey: ALL_KEYS.Invoice,
-//             });
-//             doc = receiptClient.docFromPath(__dirname + "/images/" + filePath);
-//             var resp = await doc.parse(mindee.InvoiceV4);
-//             console.log("resp of receipt", resp);
-//             break;
+          case "Passport":
+            console.log("Passport");
 
-//           case "Passport":
-//             console.log("Passport");
+            // Call the Mindee API for Passport
+            const passportClient = new mindee.Client({
+              apiKey: ALL_KEYS.Invoice,
+            });
+            doc = passportClient.docFromPath(__dirname + "/images/" + filePath);
+            var resp = await doc.parse(mindee.InvoiceV4);
+            console.log("resp of Passport", resp);
 
-//             // Call the Mindee API for Passport
-//             const passportClient = new mindee.Client({
-//               apiKey: ALL_KEYS.Invoice,
-//             });
-//             doc = passportClient.docFromPath(__dirname + "/images/" + filePath);
-//             var resp = await doc.parse(mindee.InvoiceV4);
-//             console.log("resp of Passport", resp);
+          case "US Bank Check":
+            console.log("US Bank Check");
 
-//           case "US Bank Check":
-//             console.log("US Bank Check");
+            // Call the Mindee API for US Bank Check (replace mindee with appropriate module)
+            const usBankClient = new mindee.Client({
+              apiKey: ALL_KEYS.Invoice,
+            });
+            doc = usBankClient.docFromPath(__dirname + "/images/" + filePath);
+            var resp = await doc.parse(mindee.InvoiceV4);
+            console.log("resp of us bank", resp);
 
-//             // Call the Mindee API for US Bank Check (replace mindee with appropriate module)
-//             const usBankClient = new mindee.Client({
-//               apiKey: ALL_KEYS.Invoice,
-//             });
-//             doc = usBankClient.docFromPath(__dirname + "/images/" + filePath);
-//             var resp = await doc.parse(mindee.InvoiceV4);
-//             console.log("resp of us bank", resp);
+          case "License Plates":
+            // Call the Mindee API for License Plates (replace mindee with appropriate module)
+            const licensePlateClient = new mindee.Client({
+              apiKey: ALL_KEYS.Invoice,
+            });
+            doc = licensePlateClient.docFromPath(
+              __dirname + "/images/" + filePath
+            );
+            var resp = await doc.parse(mindee.InvoiceV4); //  License Plates not avalaible
+            console.log("resp of receipt", resp);
 
-//           case "License Plates":
-//             // Call the Mindee API for License Plates (replace mindee with appropriate module)
-//             const licensePlateClient = new mindee.Client({
-//               apiKey: ALL_KEYS.Invoice,
-//             });
-//             doc = licensePlateClient.docFromPath(
-//               __dirname + "/images/" + filePath
-//             );
-//             var resp = await doc.parse(mindee.InvoiceV4); //  License Plates not avalaible
-//             console.log("resp of receipt", resp);
+          case "Video":
+            // Call the Mindee API for License Plates (replace mindee with appropriate module)
+            const videoClient = new mindee.Client({
+              apiKey: ALL_KEYS.Invoice,
+            });
+            doc = videoClient.docFromPath(__dirname + "/images/" + filePath);
+            var resp = await doc.parse(mindee.InvoiceV4); //  License Plates not avalaible
+            console.log("resp of receipt", resp);
 
-//           case "Video":
-//             // Call the Mindee API for License Plates (replace mindee with appropriate module)
-//             const videoClient = new mindee.Client({
-//               apiKey: ALL_KEYS.Invoice,
-//             });
-//             doc = videoClient.docFromPath(__dirname + "/images/" + filePath);
-//             var resp = await doc.parse(mindee.InvoiceV4); //  License Plates not avalaible
-//             console.log("resp of receipt", resp);
+          case "License plates":
+            // Call the Mindee API for License Plates (replace mindee with appropriate module)
+            const LicenseClient = new mindee.Client({
+              apiKey: ALL_KEYS.Invoice,
+            });
+            doc = LicenseClient.docFromPath(__dirname + "/images/" + filePath);
+            var resp = await doc.parse(mindee.InvoiceV4); //  License Plates not avalaible
+            console.log("resp of receipt", resp);
 
-//           case "License plates":
-//             // Call the Mindee API for License Plates (replace mindee with appropriate module)
-//             const LicenseClient = new mindee.Client({
-//               apiKey: ALL_KEYS.Invoice,
-//             });
-//             doc = LicenseClient.docFromPath(__dirname + "/images/" + filePath);
-//             var resp = await doc.parse(mindee.InvoiceV4); //  License Plates not avalaible
-//             console.log("resp of receipt", resp);
+          default:
+            console.log("Unknown selected API:", selectedApi);
+            break;
+        }
 
-//           default:
-//             console.log("Unknown selected API:", selectedApi);
-//             break;
-//         }
+        // Extracted data from Mindee response (modify this based on the Mindee API response structure)
+        extractedData = resp.document.toString();
 
-//         // Extracted data from Mindee response (modify this based on the Mindee API response structure)
-//         extractedData = resp.document.toString();
-
-//         // Process the extracted data to remove colon-separated lines at the beginning of each section
-//         extractedData = extractedData.replace(/:\s*[\s\S]*?(?=(\n|$))/g, "");
-
-//         console.log("extractedData from api", extractedData);
-//         res.redirect("/showdata");
-//       } catch (mindeeError) {
-//         console.error("Mindee API error:", mindeeError);
-//         res.send("Mindee API error");
-//       }
-//     });
-//   } catch (uploadError) {
-//     console.error("Error during upload processing:", uploadError);
-//     res.send("Error during upload processing");
-//   }
-// });
+        // Process the extracted data to remove colon-separated lines at the beginning of each section
+        extractedData = extractedData.replace(/:\s*[\s\S]*?(?=(\n|$))/g, "");
+        result = extractedData
+        res.redirect("/showdata");
+        return
+      } catch (mindeeError) {
+        console.error("Mindee API error:", mindeeError);
+        res.send("Mindee API error");
+      }
+    });
+  } catch (uploadError) {
+    console.error("Error during upload processing:", uploadError);
+    res.send("Error during upload processing");
+  }
+});
 
 app.get("/showdata", async (req, res) => {
   console.log("extractedData", extractedData);
