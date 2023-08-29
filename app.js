@@ -145,7 +145,7 @@ app.post("/upload", async (req, res) => {
         extractedData = extractedData.replace(/:\s*[\s\S]*?(?=(\n|$))/g, "");
 
         result = extractedData;
-        res.redirect("/showdata");
+        res.redirect("/result");
         return
       } catch (mindeeError) {
         console.error("Mindee API error:", mindeeError);
