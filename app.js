@@ -144,8 +144,9 @@ app.post("/upload", async (req, res) => {
         // Process the extracted data to remove colon-separated lines at the beginning of each section
         extractedData = extractedData.replace(/:\s*[\s\S]*?(?=(\n|$))/g, "");
 
-        console.log("extractedData from api", extractedData);
+        result = extractedData;
         res.redirect("/showdata");
+        return
       } catch (mindeeError) {
         console.error("Mindee API error:", mindeeError);
         res.send("Mindee API error");
@@ -164,6 +165,7 @@ app.get("/showdata", async (req, res) => {
   }
   if (!result) {
     res.redirect("/");
+    return
   }
 
   await fsExtra.emptyDirSync(directory);
