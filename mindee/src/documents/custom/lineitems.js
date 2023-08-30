@@ -5,7 +5,17 @@ const handler_1 = require("../../errors/handler");
 const errors_1 = require("../../errors");
 const geometry_1 = require("../../geometry");
 const fields_1 = require("./fields");
-const math_1 = require("./math/index");
+
+function equals(a, b, tolerance) {
+    if (Math.abs(b - a) <= tolerance) {
+        return true;
+    }
+    if (Math.abs(a - b) <= tolerance) {
+        return true;
+    }
+    return false;
+}
+
 class Line {
     constructor(rowNumber, heightTolerance) {
         this.rowNumber = rowNumber;
@@ -29,7 +39,7 @@ class Line {
      * Check if the bbox fits the current line.
      */
     contains(bbox) {
-        return (0, math_1.precisionEquals)(this.bbox[1], bbox[1], this.heightTolerance);
+        return equals(this.bbox[1], bbox[1], this.heightTolerance);
     }
     updateField(name, fieldValue) {
         if (!this.fields.has(name)) {
