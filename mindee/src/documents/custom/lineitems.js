@@ -5,7 +5,7 @@ const handler_1 = require("../../errors/handler");
 const errors_1 = require("../../errors");
 const geometry_1 = require("../../geometry");
 const fields_1 = require("./fields");
-const math_1 = require("../../math");
+const math_1 = require("./math/index");
 class Line {
     constructor(rowNumber, heightTolerance) {
         this.rowNumber = rowNumber;
