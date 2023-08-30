@@ -58,7 +58,7 @@ app.post("/upload", async (req, res) => {
     upload(req, res, async (err) => {
       if (err) {
         console.error("Error during upload:", err);
-        return res.send("Something went wrong");
+        return res.send("Something went wrong: "+err.message);
       }
       var image = fs.readFileSync(__dirname + "/images/" + filePath, {
         encoding: null,
