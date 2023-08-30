@@ -91,7 +91,7 @@ app.post("/upload", async (req, res) => {
             const receiptClient = new mindee.Client({
               apiKey: ALL_KEYS.Invoice,
             });
-            doc = receiptClient.docFromPath(__dirname + "/images/" + filePath);
+            doc = receiptClient.docFromPath(tempraryImageDirectory + filePath);
             var resp = await doc.parse(mindee.InvoiceV4);
             console.log("resp of receipt", resp);
             break;
@@ -103,7 +103,7 @@ app.post("/upload", async (req, res) => {
             const passportClient = new mindee.Client({
               apiKey: ALL_KEYS.Invoice,
             });
-            doc = passportClient.docFromPath(__dirname + "/images/" + filePath);
+            doc = passportClient.docFromPath(tempraryImageDirectory + filePath);
             var resp = await doc.parse(mindee.InvoiceV4);
             console.log("resp of Passport", resp);
 
@@ -114,7 +114,7 @@ app.post("/upload", async (req, res) => {
             const usBankClient = new mindee.Client({
               apiKey: ALL_KEYS.Invoice,
             });
-            doc = usBankClient.docFromPath(__dirname + "/images/" + filePath);
+            doc = usBankClient.docFromPath(tempraryImageDirectory + filePath);
             var resp = await doc.parse(mindee.InvoiceV4);
             console.log("resp of us bank", resp);
 
@@ -124,7 +124,7 @@ app.post("/upload", async (req, res) => {
               apiKey: ALL_KEYS.Invoice,
             });
             doc = licensePlateClient.docFromPath(
-              __dirname + "/images/" + filePath
+              tempraryImageDirectory + filePath
             );
             var resp = await doc.parse(mindee.InvoiceV4); //  License Plates not avalaible
             console.log("resp of receipt", resp);
@@ -134,7 +134,7 @@ app.post("/upload", async (req, res) => {
             const videoClient = new mindee.Client({
               apiKey: ALL_KEYS.Invoice,
             });
-            doc = videoClient.docFromPath(__dirname + "/images/" + filePath);
+            doc = videoClient.docFromPath(tempraryImageDirectory + filePath);
             var resp = await doc.parse(mindee.InvoiceV4); //  License Plates not avalaible
             console.log("resp of receipt", resp);
 
@@ -143,7 +143,7 @@ app.post("/upload", async (req, res) => {
             const LicenseClient = new mindee.Client({
               apiKey: ALL_KEYS.Invoice,
             });
-            doc = LicenseClient.docFromPath(__dirname + "/images/" + filePath);
+            doc = LicenseClient.docFromPath(tempraryImageDirectory + filePath);
             var resp = await doc.parse(mindee.InvoiceV4); //  License Plates not avalaible
             console.log("resp of receipt", resp);
 
