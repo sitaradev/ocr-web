@@ -20,6 +20,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var Tesseract = require("tesseract.js");
 app.use(express.static("public"));
 
+let tempraryImageDirectory;
+if (process.env.DEV && process.env.DEV === 'Yes') {
+  tempraryImageDirectory = path.join(__dirname, `../../tmp/`);
+} else {
+  tempraryImageDirectory = '/tmp/';
+}
+
 // all different api keys----
 const ALL_KEYS = {
   Invoice: "d895b172b16a6714ddc7bb22f26139b2",
@@ -39,7 +46,7 @@ function getFilePath(path) {
 var filePath;
 var Storage = multer.diskStorage({
   destination: (req, file, callback) => {
-    callback(null, __dirname + "/public/images");
+    callback(null, __dirname + "/temp");
   },
   filename: (req, file, callback) => {
     filePath = getFilePath(file.originalname);
@@ -60,7 +67,7 @@ app.post("/upload", async (req, res) => {
         console.error("Error during upload:", err);
         return res.send("Something went wrong: "+err.message);
       }
-      var image = fs.readFileSync(__dirname + "/public/images/" + filePath, {
+      var image = fs.readFileSync(__dirname + "/temp/" + filePath, {
         encoding: null,
       });
 
@@ -74,7 +81,7 @@ app.post("/upload", async (req, res) => {
             const invoiceClient = new mindee.Client({
               apiKey: ALL_KEYS.Invoice,
             });
-            doc = invoiceClient.docFromPath(__dirname + "public/images/" + filePath);
+            doc = invoiceClient.docFromPath(__dirname + "temp/" + filePath);
             var resp = await doc.parse(mindee.InvoiceV4);
             console.log("resp of invoice", resp);
             break;
