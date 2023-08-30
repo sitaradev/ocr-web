@@ -161,8 +161,8 @@ app.post("/upload", async (req, res) => {
       }
     });
   } catch (uploadError) {
-    console.error("Error during upload processing:", uploadError);
-    res.send("Error during upload processing");
+    console.error("Error during upload processing:", uploadError.message);
+    res.send("Error during upload processing: "+uploadError.message);
   }
 });
 
