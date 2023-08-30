@@ -46,7 +46,7 @@ function getFilePath(path) {
 var filePath;
 var Storage = multer.diskStorage({
   destination: (req, file, callback) => {
-    callback(null, __dirname + "/temp");
+    callback(null, tempraryImageDirectory);
   },
   filename: (req, file, callback) => {
     filePath = getFilePath(file.originalname);
@@ -67,7 +67,7 @@ app.post("/upload", async (req, res) => {
         console.error("Error during upload:", err);
         return res.send("Something went wrong: "+err.message);
       }
-      var image = fs.readFileSync(__dirname + "/temp/" + filePath, {
+      var image = fs.readFileSync(tempraryImageDirectory + filePath, {
         encoding: null,
       });
 
@@ -81,7 +81,7 @@ app.post("/upload", async (req, res) => {
             const invoiceClient = new mindee.Client({
               apiKey: ALL_KEYS.Invoice,
             });
-            doc = invoiceClient.docFromPath(__dirname + "temp/" + filePath);
+            doc = invoiceClient.docFromPath(tempraryImageDirectory + filePath);
             var resp = await doc.parse(mindee.InvoiceV4);
             console.log("resp of invoice", resp);
             break;
