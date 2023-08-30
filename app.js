@@ -71,8 +71,6 @@ app.post("/upload", async (req, res) => {
       try {
         switch (selectedApi) {
           case "Invoice":
-            console.log("Invoice");
-
             const invoiceClient = new mindee.Client({
               apiKey: ALL_KEYS.Invoice,
             });
