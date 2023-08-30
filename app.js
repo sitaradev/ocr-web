@@ -54,7 +54,7 @@ var upload = multer({
 var extractedData;
 app.post("/upload", async (req, res) => {
   try {
-    const mindee = require("mindee");
+    const mindee = require("./mindee");
     upload(req, res, async (err) => {
       if (err) {
         console.error("Error during upload:", err);
